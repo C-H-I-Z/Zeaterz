@@ -1,0 +1,9 @@
+# API keys and environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Mac system files
+.DS_Store
