@@ -1,0 +1,10 @@
+# API keys and environment variables
+.env
+serviceAccountKey.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Mac system files
+.DS_Store
