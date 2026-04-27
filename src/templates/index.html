@@ -1,127 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RegCheck — Rallis-Daw Consulting</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-<div class="page">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RegCheck — Rallis-Daw Consulting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
 
-  <!-- WAVE BACKGROUND SVG -->
-  <svg class="wave-bg" viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <linearGradient id="wave1" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#5ba3d9;stop-opacity:0.5"/>
-        <stop offset="100%" style="stop-color:#2e6db4;stop-opacity:0.3"/>
-      </linearGradient>
-      <linearGradient id="wave2" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#4dc8e8;stop-opacity:0.4"/>
-        <stop offset="100%" style="stop-color:#5ba3d9;stop-opacity:0.2"/>
-      </linearGradient>
-      <linearGradient id="wave3" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#7b68ee;stop-opacity:0.3"/>
-        <stop offset="100%" style="stop-color:#2e6db4;stop-opacity:0.15"/>
-      </linearGradient>
-    </defs>
-    <!-- Back wave -->
-    <path d="M600,0 L600,900 L0,900 Q150,700 300,600 Q450,500 600,300 Z" fill="url(#wave3)" opacity="0.5"/>
-    <!-- Mid wave -->
-    <path d="M600,0 L600,900 L100,900 Q200,750 350,650 Q500,550 600,350 Z" fill="url(#wave1)" opacity="0.6"/>
-    <!-- Front wave -->
-    <path d="M600,200 Q500,350 400,450 Q300,550 250,700 Q200,800 300,900 L600,900 Z" fill="url(#wave2)" opacity="0.7"/>
-    <!-- Small accent blob -->
-    <ellipse cx="500" cy="200" rx="120" ry="80" fill="#4dc8e8" opacity="0.15" transform="rotate(-20 500 200)"/>
-  </svg>
+  <body>
+    <div class="page">
+      <!-- WAVE BACKGROUND SVG -->
+      <svg class="wave-bg" viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wave1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#5ba3d9;stop-opacity:0.5"/>
+            <stop offset="100%" style="stop-color:#2e6db4;stop-opacity:0.3"/>
+          </linearGradient>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo-wrap">
-      <img
-        class="logo-img"
-        src="https://static.wixstatic.com/media/9f2dc8_980147f3f25a4e50a2220ab0bd98dba8~mv2.png/v1/fill/w_129,h_128,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sig%20logo.png"
-        alt="Rallis-Daw Consulting"
-      >
-    </div>
-    <div class="tool-label">RegCheck — Prototype v0.1</div>
-  </header>
+          <linearGradient id="wave2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#4dc8e8;stop-opacity:0.4"/>
+            <stop offset="100%" style="stop-color:#5ba3d9;stop-opacity:0.2"/>
+          </linearGradient>
 
-  <!-- CONTENT -->
-  <div class="content">
+          <linearGradient id="wave3" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#7b68ee;stop-opacity:0.3"/>
+            <stop offset="100%" style="stop-color:#2e6db4;stop-opacity:0.15"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Back wave -->
+        <path d="M600,0 L600,900 L0,900 Q150,700 300,600 Q450,500 600,300 Z" fill="url(#wave3)" opacity="0.5"/>
+        <!-- Mid wave -->
+        <path d="M600,0 L600,900 L100,900 Q200,750 350,650 Q500,550 600,350 Z" fill="url(#wave1)" opacity="0.6"/>
+        <!-- Front wave -->
+        <path d="M600,200 Q500,350 400,450 Q300,550 250,700 Q200,800 300,900 L600,900 Z" fill="url(#wave2)" opacity="0.7"/>
+        <!-- Small accent blob -->
+        <ellipse cx="500" cy="200" rx="120" ry="80" fill="#4dc8e8" opacity="0.15" transform="rotate(-20 500 200)"/>
+      </svg>
 
-    <div class="page-title">Regulatory Standards</div>
-    <div class="page-heading">External Documents<br>Checker</div>
-    <div class="page-sub">Upload a device requirements file to extract and review all regulatory standards</div>
-
-    <!-- UPLOAD CARD -->
-    <div class="upload-card">
-
-      <div class="card-title">
-        <div class="card-title-icon">📋</div>
-        Document Upload
-      </div>
-
-      <div class="drop-zone" id="dropZone">
-        <input type="file" id="fileInput" accept=".pdf,.docx,.xlsx">
-        <span class="drop-icon" id="dropIcon">☁️</span>
-        <div class="drop-title" id="dropTitle">Drag & Drop or Upload a File</div>
-        <div class="drop-sub" id="dropSub">Click anywhere in this box to browse</div>
-        <div class="file-types">
-          <span class="type-badge type-pdf">PDF</span>
-          <span class="type-badge type-docx">DOCX</span>
-          <span class="type-badge type-xlsx">XLSX</span>
+      <!-- HEADER -->
+      <header>
+        <div class="logo-wrap">
+          <img
+            class="logo-img"
+            src="https://static.wixstatic.com/media/9f2dc8_980147f3f25a4e50a2220ab0bd98dba8~mv2.png/v1/fill/w_129,h_128,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sig%20logo.png"
+            alt="Rallis-Daw Consulting"
+          >
         </div>
-      </div>
+        <div class="tool-label">RegCheck — Prototype v0.1</div>
+      </header>
 
-      <div class="file-preview" id="filePreview">
-        <div class="file-info">
-          <span class="file-icon" id="fileTypeIcon">📄</span>
-          <span class="file-name" id="fileName"></span>
+      <!-- CONTENT -->
+      <div class="content">
+        <div class="page-title">Regulatory Standards</div>
+        <div class="page-heading">External Documents<br>Checker</div>
+        <div class="page-sub">Upload a device requirements file to extract and review all regulatory standards</div>
+
+        <!-- UPLOAD CARD -->
+        <div class="upload-card">
+          <div class="card-title">
+            <div class="card-title-icon">📋</div>
+            Document Upload
+          </div>
+
+          <div class="drop-zone" id="dropZone">
+            <input type="file" id="fileInput" accept=".pdf,.docx,.xlsx">
+            <span class="drop-icon" id="dropIcon">☁️</span>
+            <div class="drop-title" id="dropTitle">Drag & Drop or Upload a File</div>
+            <div class="drop-sub" id="dropSub">Click anywhere in this box to browse</div>
+            <div class="file-types">
+              <span class="type-badge type-pdf">PDF</span>
+              <span class="type-badge type-docx">DOCX</span>
+              <span class="type-badge type-xlsx">XLSX</span>
+            </div>
+          </div>
+
+          <div class="file-preview" id="filePreview">
+            <div class="file-info">
+              <span class="file-icon" id="fileTypeIcon">📄</span>
+              <span class="file-name" id="fileName"></span>
+            </div>
+            <button class="file-clear" onclick="clearFile()">✕ Remove</button>
+          </div>
+
+          <div class="submit-wrap" id="submitWrap">
+            <button class="btn-submit" id="submitBtn" onclick="submitFile()">
+              Extract Requirements
+            </button>
+          </div>
+
+          <div class="status" id="status">
+            <div class="spinner"></div>
+            <div class="status-text" id="statusText">Sending to Gemini AI — this may take 15–30 seconds...</div>
+          </div>
+
+          <div class="error-box" id="errorBox"></div>
+
+          <div class="disclaimer" id="disclaimer">
+            ⚠ AI DISCLAIMER — This extraction is intended solely to assist regulatory review.
+            All results must be verified by a qualified professional before use in any compliance submission.
+          </div>
+
         </div>
-        <button class="file-clear" onclick="clearFile()">✕ Remove</button>
-      </div>
+        <!-- END UPLOAD CARD -->
 
-      <div class="submit-wrap" id="submitWrap">
-        <button class="btn-submit" id="submitBtn" onclick="submitFile()">
-          Extract Requirements
-        </button>
-      </div>
+        <!-- RESULTS -->
+        <div id="results">
+          <div class="results-header">
+            <div class="results-heading">Extraction Results</div>
+            <a class="download-btn" id="downloadBtn" href="#">⬇ Download JSON</a>
+          </div>
+          <div class="stats-row" id="statsRow"></div>
+          <div id="categorySections"></div>
+        </div>
 
-      <div class="status" id="status">
-        <div class="spinner"></div>
-        <div class="status-text" id="statusText">Sending to Gemini AI — this may take 15–30 seconds...</div>
       </div>
+      <!-- END CONTENT -->
 
-      <div class="error-box" id="errorBox"></div>
-
-      <div class="disclaimer" id="disclaimer">
-        ⚠ AI DISCLAIMER — This extraction is intended solely to assist regulatory review.
-        All results must be verified by a qualified professional before use in any compliance submission.
-      </div>
+      <!-- FOOTER -->
+      <footer>
+        © Rallis-Daw Consulting LLC &nbsp;·&nbsp; RegCheck Tool &nbsp;·&nbsp; For internal use only
+      </footer>
 
     </div>
-    <!-- END UPLOAD CARD -->
-
-    <!-- RESULTS -->
-    <div id="results">
-      <div class="results-header">
-        <div class="results-heading">Extraction Results</div>
-        <a class="download-btn" id="downloadBtn" href="#">⬇ Download JSON</a>
-      </div>
-      <div class="stats-row" id="statsRow"></div>
-      <div id="categorySections"></div>
-    </div>
-
-  </div>
-  <!-- END CONTENT -->
-
-  <!-- FOOTER -->
-  <footer>
-    © Rallis-Daw Consulting LLC &nbsp;·&nbsp; RegCheck Tool &nbsp;·&nbsp; For internal use only
-  </footer>
-</div>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
+  </body>
 </html>
