@@ -33,7 +33,10 @@ load_dotenv()
 
 # Initialize app
 app = Flask(__name__, template_folder='templates', static_folder='static')
-CORS(app, origins=["http://localhost:5000"])
+CORS(app, origins=[
+  "http://localhost:5000",
+  "https://your-app-name.onrender.com"
+  ])
 
 # Initialize database connections
 init_database()
@@ -102,4 +105,5 @@ if __name__ == "__main__":
   print("  RegCheck — Rallis-Daw Consulting")
   print("  Supports: PDF, DOCX, XLSX")
   print("=" * 50)
-  app.run(debug=False, port=5000)
+  port = int(os.environ.get("PORT", 5000))
+  app.run(debug=False, port=port, debug=True)    # debug=False for production, set to True for development

@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: zeaterz
+    runtime: python311
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python src/app.py"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: PORT
+        value: 5000

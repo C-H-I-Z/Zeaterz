@@ -1,6 +1,5 @@
 # API keys and environment variables
 .env
-serviceAccountKey.json
 
 # Python cache
 __pycache__/
