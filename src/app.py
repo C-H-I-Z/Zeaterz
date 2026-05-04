@@ -106,4 +106,4 @@ if __name__ == "__main__":
   print("  Supports: PDF, DOCX, XLSX")
   print("=" * 50)
   port = int(os.environ.get("PORT", 5000))
-  app.run(debug=False, port=port, debug=True)    # debug=False for production, set to True for development
+  app.run(debug=False, port=port, debug=False)    # debug=False for production, set to True for development
