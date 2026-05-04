@@ -35,7 +35,7 @@ load_dotenv()
 app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app, origins=[
   "http://localhost:5000",
-  "https://your-app-name.onrender.com"
+  "https://sota-regulatory-requirements-manager.onrender.com/"
   ])
 
 # Initialize database connections
