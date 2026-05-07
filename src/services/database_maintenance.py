@@ -1,31 +1,39 @@
-import json
-import firebase_admin
-from firebase_admin import credentials
-from supabase import create_client
-from config.settings import FIREBASE_CREDENTIALS, SUPABASE_URL, SUPABASE_KEY
+from datetime import datetime, timezone
+import re
 
-# Global database clients
-firebase_app = None
-supabase_client = None
+TABLE_NAME     = "extracted_from_List"
 
-def init_database():
-    """Initialize Firebase and Supabase connections."""
-    global firebase_app, supabase_client
-    
-    # Firebase init
-    if FIREBASE_CREDENTIALS:
-        cert = json.loads(FIREBASE_CREDENTIALS)
-        cred = credentials.Certificate(cert)
-        firebase_app = firebase_admin.initialize_app(cred)
-    
-    # Supabase init
-    if SUPABASE_URL and SUPABASE_KEY:
-        supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY)
-    
-    return firebase_app, supabase_client
 
-def get_firestore():
-    """Get Firestore client."""
-    from firebase_admin import firestore
-    
-    return firestore.client()
+def extract_year(date_str):
+    if not date_str or date_str.strip().lower() in ("current", "**", ""):
+        return None
+    match = re.search(r'\b(19|20)\d{2}\b', str(date_str))
+    return int(match.group()) if match else None
+
+
+def enrich_requirement(req, filename):
+    date_val = req.get("date", "") or ""
+    is_current = date_val.strip().lower() in ("current", "**", "")
+    year = extract_year(date_val)
+    return {
+        "standard_id":         req.get("standard_id", ""),
+        "date":                date_val,
+        "date_year":           int(year) if year is not None else None,
+        "category":            req.get("category", ""),
+        "region":              req.get("region", ""),
+        "description":         req.get("description", ""),
+        "needs_manual_review": is_current,
+        "source_filename":     filename,
+        "uploaded_at":         datetime.now(timezone.utc).isoformat(),
+        "status":              None,
+    }
+
+
+def insert_to_supabase(requirements, supabase_client=None):
+    if not supabase_client:
+        return 0, "Supabase is not configured."
+    try:
+        supabase_client.table(TABLE_NAME).insert(requirements).execute()
+        return len(requirements), None
+    except Exception as e:
+        return 0, str(e)
