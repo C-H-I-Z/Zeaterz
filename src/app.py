@@ -126,7 +126,7 @@ def extract():
           db_not_configured = True
       else:
           rows_to_insert = [{k: v for k, v in r.items() if k != "id"} for r in enriched]
-          db_count, db_error = insert_to_supabase(rows_to_insert)
+          db_count, db_error = insert_to_supabase(rows_to_insert, supabase_client)
           db_success = db_error is None
 
       return jsonify({
