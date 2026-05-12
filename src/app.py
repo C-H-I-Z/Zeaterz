@@ -146,26 +146,26 @@ def extract():
       os.unlink(tmp_path)
 
 
-if __name__ == "__main__":
-  print("\n" + "=" * 50)
-  print("  RegCheck -- Rallis-Daw Consulting")
-  print("  Supports: PDF, DOCX, XLSX")
-  print("=" * 50)
+# if __name__ == "__main__":
+#   print("\n" + "=" * 50)
+#   print("  RegCheck -- Rallis-Daw Consulting")
+#   print("  Supports: PDF, DOCX, XLSX")
+#   print("=" * 50)
 
-  if not GEMINI_API_KEY:
-      print("\n  WARNING: No Gemini API key found!")
-      print("  Add GEMINI_API_KEY to your .env file\n")
-  else:
-      print("  OK: Gemini API key loaded")
+#   if not GEMINI_API_KEY:
+#       print("\n  WARNING: No Gemini API key found!")
+#       print("  Add GEMINI_API_KEY to your .env file\n")
+#   else:
+#       print("  OK: Gemini API key loaded")
 
-  if not SUPABASE_URL or not SUPABASE_KEY:
-      print("  WARNING: Supabase not configured!")
-      print("  Add SUPABASE_URL and SUPABASE_KEY to your .env file")
-  else:
-      print("  OK: Supabase configured")
+#   if not SUPABASE_URL or not SUPABASE_KEY:
+#       print("  WARNING: Supabase not configured!")
+#       print("  Add SUPABASE_URL and SUPABASE_KEY to your .env file")
+#   else:
+#       print("  OK: Supabase configured")
 
-  print("\n  Open your browser to: http://localhost:5000")
-  print("  Press Ctrl+C to stop the server")
-  print("=" * 50 + "\n")
+#   print("\n  Open your browser to: http://localhost:5000")
+#   print("  Press Ctrl+C to stop the server")
+#   print("=" * 50 + "\n")
 
-app.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+# app.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
