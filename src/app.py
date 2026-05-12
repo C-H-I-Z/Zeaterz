@@ -41,7 +41,9 @@ SUPABASE_KEY   = os.getenv("SUPABASE_KEY")
 GEMINI_MODEL   = "gemini-2.5-flash"
 
 # Initialize app
-app = Flask(__name__, template_folder='templates', static_folder='static')
+app = Flask(__name__, 
+            template_folder=os.path.join(os.path.dirname(__file__), 'templates'), 
+            static_folder=os.path.join(os.path.dirname(__file__), 'static'))
 
 CORS(app, origins=[
   "http://localhost:5000",
