@@ -30,8 +30,8 @@ import tempfile
 import google.generativeai as genai
 
 # Services
-from services.text_extraction import extract_text
-from services.database_maintenance import enrich_requirement, insert_to_supabase
+from .services.text_extraction import extract_text
+from .services.database_maintenance import enrich_requirement, insert_to_supabase
 
 load_dotenv()
 
