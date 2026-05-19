@@ -1,0 +1,212 @@
+:root {
+  --navy:    #1a2f5e;
+  --blue:    #2e6db4;
+  --lblue:   #5ba3d9;
+  --cyan:    #4dc8e8;
+  --bg:      #eaf3fb;
+  --white:   #ffffff;
+  --text:    #1a2f5e;
+  --muted:   #6b82a8;
+  --border:  #c5d8ed;
+  --font:    'Montserrat', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.page {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.wave-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+header {
+  position: relative;
+  z-index: 10;
+  background: var(--white);
+  padding: 16px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 12px rgba(26,47,94,0.08);
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 52px;
+  width: auto;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: var(--blue);
+}
+
+.tool-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+.content {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  padding: 48px 56px 60px;
+}
+
+.help-about-layout {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+}
+
+.help-about-left {
+  width: 620px;
+}
+
+.page-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.page-heading {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.15;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.page-sub {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+.info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 8px 30px rgba(26,47,94,0.12);
+  max-width: 620px;
+}
+
+.info-card h3 {
+  font-size: 15px;
+  color: var(--navy);
+  margin: 18px 0 8px;
+}
+
+.info-card p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.help-about-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+}
+
+.help-about-left {
+  flex: 1 1 480px;
+  min-width: 280px;
+}
+
+.help-about-medtech {
+  flex: 0 0 min(520px, 100%);
+  width: min(520px, 100%);
+  position: relative;
+  top: auto;
+  right: auto;
+  transform: none;
+  margin-left: auto;
+}
+
+.help-about-medtech img {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  object-fit: contain;
+}
+
+footer {
+  position: relative;
+  z-index: 5;
+  background: var(--navy);
+  padding: 14px 56px;
+  text-align: center;
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: auto;
+}

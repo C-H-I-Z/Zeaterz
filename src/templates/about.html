@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOTA &mdash; About</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/rallis-daw logo.png') }}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+  </head>
+
+  <body>
+    <div class="page">
+      <svg class="wave-bg" viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wv1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#5ba3d9;stop-opacity:0.5"/>
+            <stop offset="100%" style="stop-color:#2e6db4;stop-opacity:0.3"/>
+          </linearGradient>
+
+          <linearGradient id="wv2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#4dc8e8;stop-opacity:0.4"/>
+            <stop offset="100%" style="stop-color:#5ba3d9;stop-opacity:0.2"/>
+          </linearGradient>
+
+          <linearGradient id="wv3" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#7b68ee;stop-opacity:0.3"/>
+            <stop offset="100%" style="stop-color:#2e6db4;stop-opacity:0.15"/>
+          </linearGradient>
+        </defs>
+
+        <path d="M600,0 L600,900 L0,900 Q150,700 300,600 Q450,500 600,300 Z" fill="url(#wv3)" opacity="0.5"/>
+        <path d="M600,0 L600,900 L100,900 Q200,750 350,650 Q500,550 600,350 Z" fill="url(#wv1)" opacity="0.6"/>
+        <path d="M600,200 Q500,350 400,450 Q300,550 250,700 Q200,800 300,900 L600,900 Z" fill="url(#wv2)" opacity="0.7"/>
+      </svg>
+
+      <header>
+
+        <div class="logo-wrap">
+          <img class="logo-img"
+            src="https://static.wixstatic.com/media/9f2dc8_980147f3f25a4e50a2220ab0bd98dba8~mv2.png/v1/fill/w_129,h_128,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sig%20logo.png"
+            alt="Rallis-Daw Consulting">
+        </div>
+
+        <div class="header-right">
+          <nav class="nav-links">
+            <a href="/">Upload</a>
+            <a href="/help">Help</a>
+          </nav>
+
+          <div class="tool-label">SOTA &mdash; Prototype v0.1</div>
+        </div>
+
+      </header>
+
+      <div class="content">
+
+        <section id="aboutScreen">
+
+          <div class="help-about-layout">
+
+            <div class="help-about-left">
+
+              <div class="page-title">
+                About SOTA
+              </div>
+
+              <div class="page-heading">
+                Regulatory Requirements Management System
+              </div>
+
+              <div class="page-sub">
+                A tool for extracting standards, regulations, and guidance references.
+              </div>
+
+              <div class="info-card">
+
+                <h3>Purpose</h3>
+
+                <p>
+                  Our platform assists reviewers by automatically identifying relevant
+                  regulatory standards from uploaded device-requirement documents,
+                  improving consistency and reducing manual effort.
+                </p>
+
+                <h3>Intended use</h3>
+
+                <p>
+                  This tool is intended to support internal review workflows.
+                  It is not a substitute for professional regulatory or compliance judgment.
+                </p>
+
+                <h3>AI disclaimer</h3>
+
+                <p>
+                  All AI-generated outputs must be independently reviewed and validated
+                  by a qualified professional before being used in any regulatory,
+                  compliance, or submission context.
+                </p>
+
+              </div>
+
+            </div>
+
+            <!-- <div class="help-about-medtech">
+              <img src="/static/images/medtech.avif" alt="Medtech Professionals Image">
+            </div> -->
+
+          </div>
+
+        </section>
+
+      </div>
+
+      <footer>
+        &copy; Rallis-Daw Consulting LLC &middot; SOTA Tool &middot; For internal use only
+      </footer>
+
+    </div>
+  </body>
+</html>
