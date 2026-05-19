@@ -152,6 +152,13 @@ On Windows:
 python app.py
 ```
 
+On Flask:
+```
+set FLASK_APP=src.app
+set FLASK_ENV=development
+flask run --host=0.0.0.0 --port=5000
+```
+
 You should see:
 
 ```
