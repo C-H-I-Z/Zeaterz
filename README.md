@@ -1,13 +1,9 @@
-## Medical Device Regulatory Standards Checker
-
----
+# Medical Device Regulatory Standards Checker
 
 ## What This Does
 
- local web app that helps medical device consultants check whether the regulatory
-standards on a device's External Documents List are current. Upload a PDF, DOCX, or XLSX file
-and the app uses Gemini AI to extract all the requirements into a structured, categorized table.
-Results can be downloaded as a JSON file.
+Local web app that helps medical device consultants check whether the regulatory
+standards on a device's External Documents List are current. Upload a PDF, DOCX, or XLSX file and the app uses Gemini AI to extract all the requirements into a structured, categorized table. Results can be downloaded as a JSON file.
 
 ---
 
@@ -35,7 +31,7 @@ file at startup so you only have to set it once.
 Think of it like a personal safe on your laptop — the app knows to look there for the key,
 but the file itself never leaves your machine.
 
-### How .gitignore Keeps You Safe
+### How `.gitignore` Keeps You Safe
 
 The repo includes a `.gitignore` file that tells Git to completely ignore your `.env` file.
 This means even if you run `git add .` or `git push`, your `.env` file will never be
@@ -74,23 +70,30 @@ Every teammate needs their own key. Do not share keys.
 
 ```bash
 git clone <your-repo-url>
-cd regcheck
+cd Zeaterz
 ```
 
 > **Every command from this point forward must be run from inside the `regcheck` folder.**
 > If your terminal is not inside the folder, the app will not run correctly.
 
 ---
+## Step 3 — Create and Activate Virtual Environment
 
-## Step 3 — Install Dependencies
-
-```bash
-pip3 install flask google-generativeai pdfplumber python-docx openpyxl python-dotenv
+**On macOS / Linux**:
+```
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-On Windows use `pip` instead of `pip3`:
+**On Windows**:
 ```
-pip install flask google-generativeai pdfplumber python-docx openpyxl python-dotenv
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+Then install dependencies:
+```
+pip install -r requirements.txt
 ```
 
 ---
@@ -99,14 +102,14 @@ pip install flask google-generativeai pdfplumber python-docx openpyxl python-dot
 
 This is where you store your private API key. This file lives only on your machine.
 
-Inside the `regcheck` folder, create a new file called exactly `.env` with no other extension.
+Inside the project root, create a new file called exactly `.env` with no other extension.
 
-**On Mac/Linux:**
+**On Mac / Linux:**
 ```bash
 touch .env
 ```
 
-**On Windows:** Open Notepad, then go to File → Save As, navigate to the `regcheck` folder,
+**On Windows:** Open Notepad, then go to File → Save As, navigate to the project root,
 set "Save as type" to "All Files", and name the file `.env`
 
 Open the file and add this one line:
@@ -143,20 +146,14 @@ This is what prevents your key from ever being pushed to GitHub.
 
 ## Step 6 — Run the App
 
+**On macOS / Linux:**
 ```bash
 python3 app.py
 ```
 
-On Windows:
+**On Windows:**
 ```
 python app.py
-```
-
-On Flask:
-```
-set FLASK_APP=src.app
-set FLASK_ENV=development
-flask run --host=0.0.0.0 --port=5000
 ```
 
 You should see:
@@ -175,6 +172,29 @@ You should see:
 
 If you see `⚠ WARNING: No API key found!` go back to Step 4.
 
+### If app.run() is commented out, follow the instructions below:
+
+#### Option 1 - Run with Gunicorn
+
+```
+python -m gunicorn --bind 0.0.0.0:5000 --timeout 200 src.app:app
+```
+
+#### Option 2 - Run with Flask Development Server
+
+**On Windows:**
+```
+set FLASK_APP=src.app
+set FLASK_ENV=development
+flask run --host=0.0.0.0 --port=5000
+```
+
+**On macOS / Linux:**
+```
+export FLASK_APP=src.app
+export FLASK_ENV=development
+flask run --host=0.0.0.0 --port=5000
+```
 ---
 
 ## Step 7 — Use the App
@@ -192,7 +212,7 @@ If you see `⚠ WARNING: No API key found!` go back to Step 4.
 ## Your Folder Should Look Like This
 
 ```
-regcheck/
+Zeaterz/
 ├── app.py          ← the app (tracked by git — safe to push)
 ├── .env            ← your private API key (NOT tracked — never push)
 └── .gitignore      ← tells git to ignore .env (tracked by git — safe to push)
