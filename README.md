@@ -50,16 +50,6 @@ Powered by Google Gemini 2.0 Flash with Google Search grounding.
 - Gemini searches the web (FDA, ISO, ASTM, etc.) and returns structured JSON
 - Frontend renders the result with a date comparison
 
-## Difference vs Claude version
-
-| | Gemini version | Claude version |
-|---|---|---|
-| AI model | Gemini 2.0 Flash | Claude Sonnet |
-| Search | Google Search grounding | Anthropic web search tool |
-| SDK | Raw HTTP (httpx) | anthropic Python SDK |
-| Free tier | Yes (Google AI Studio) | No |
-| API key | console.cloud.google.com | console.anthropic.com |
-
 ## Project Structure
 
 ```
