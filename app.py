@@ -20,6 +20,7 @@ RUN:
 Then open your browser to: http://localhost:5000
 """
 
+import csv
 import json
 import os
 import re
@@ -927,11 +928,50 @@ def extract():
                 raw = raw[4:]
         raw = raw.strip()
 
+
+        #comparison logic
         requirements = json.loads(raw)
         enriched = [enrich_requirement(req, filename) for req in requirements]
 
+        doc_dates = {}
+        for req in enriched:
+            doc_dates[req["standard_id"]] = req.get("date", "")
+
+        ref_dates = {}
+        ref_csv_path = os.path.join(os.path.dirname(__file__), "reference_requirements.csv")
+        if os.path.exists(ref_csv_path):
+            with open(ref_csv_path, "r") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    ref_dates[row["standard_id"]] = row["new_date"]
+
+        for req in enriched:
+            sid = req["standard_id"]
+            doc_date = req.get("date", "")
+            ref_date = ref_dates.get(sid)
+            
+            if not ref_date:
+                req["status"] = "Needs Manual Review"
+            elif doc_date in ("Current", "**", ""):
+                req["status"] = "Needs Manual Review"
+            elif doc_date == ref_date:
+                req["status"] = "Current"
+            else:
+                req["status"] = "Not Current"
+            
         for i, req in enumerate(enriched):
             req["id"] = i + 1
+
+      
+
+
+
+    
+            
+                
+
+
+  
 
         db_success        = False
         db_error          = None
