@@ -73,188 +73,60 @@ git clone <your-repo-url>
 cd Zeaterz
 ```
 
-> **Every command from this point forward must be run from inside the `regcheck` folder.**
-> If your terminal is not inside the folder, the app will not run correctly.
+2. **Get a Gemini API key**
+   - Go to https://aistudio.google.com/app/apikey
+   - Create a new API key (free tier available)
 
----
-## Step 3 — Create and Activate Virtual Environment
+3. **Set your API key**
+   ```bash
+   # Mac/Linux
+   export GEMINI_API_KEY=your-key-here
 
-**On macOS / Linux**:
-```
-python3 -m venv venv
-source venv/bin/activate
-```
+   # Windows (Command Prompt)
+   set GEMINI_API_KEY=your-key-here
 
-**On Windows**:
-```
-python -m venv venv
-.\venv\Scripts\activate
-```
+   # Windows (PowerShell)
+   $env:GEMINI_API_KEY="your-key-here"
+   ```
 
-Then install dependencies:
-```
-pip install -r requirements.txt
-```
+4. **Run the server**
+   ```bash
+   uvicorn main:app --reload
+   ```
 
----
+   ***if that doesnt work try***
+   
+   ```bash
+   python -m uvicorn main:app --reload
+   ```
 
-## Step 4 — Create Your .env File
 
-This is where you store your private API key. This file lives only on your machine.
+5. **Open in browser**
+   ```
+   http://localhost:8000
+   ```
 
-Inside the project root, create a new file called exactly `.env` with no other extension.
+## How it works
 
-**On Mac / Linux:**
-```bash
-touch .env
-```
+- FastAPI backend receives the requirement name + description
+- Calls Gemini 2.0 Flash with Google Search grounding enabled
+- Gemini searches the web (FDA, ISO, ASTM, etc.) and returns structured JSON
+- Frontend renders the result with a date comparison
 
-**On Windows:** Open Notepad, then go to File → Save As, navigate to the project root,
-set "Save as type" to "All Files", and name the file `.env`
-
-Open the file and add this one line:
-
-```
-GEMINI_API_KEY=your_api_key_here
-```
-
-Replace `your_api_key_here` with the key you copied in Step 1.
-
-**Rules for this file:**
-- No quotes around the key
-- No spaces around the `=`
-- No other text or formatting
-- Never rename this file
-- Never copy this file anywhere else
-
----
-
-## Step 5 — Verify Your .gitignore Is Set Up
-
-The repo should already include a `.gitignore` file containing:
+## Project Structure
 
 ```
-.env
+sota-fda-checker-gemini/
+├── main.py          # FastAPI backend + Gemini API call
+├── requirements.txt
+├── README.md
+└── static/
+    └── index.html   # Frontend UI (identical to Claude version)
 ```
 
-To double check, open `.gitignore` and confirm `.env` is listed. If the file doesn't exist,
-create it in the `regcheck` folder with just that one line.
+## Next Steps
 
-This is what prevents your key from ever being pushed to GitHub.
-
----
-
-## Step 6 — Run the App
-
-**On macOS / Linux:**
-```bash
-python3 app.py
-```
-
-**On Windows:**
-```
-python app.py
-```
-
-You should see:
-
-```
-==================================================
-  RegCheck — Requirements Extractor
-  Supports: PDF, DOCX, XLSX
-==================================================
-  ✓ API key loaded from .env
-
-  Open your browser to: http://localhost:5000
-  Press Ctrl+C to stop the server
-==================================================
-```
-
-If you see `⚠ WARNING: No API key found!` go back to Step 4.
-
-### If app.run() is commented out, follow the instructions below:
-
-#### Option 1 - Run with Gunicorn
-
-```
-python -m gunicorn --bind 0.0.0.0:5000 --timeout 200 src.app:app
-```
-
-#### Option 2 - Run with Flask Development Server
-
-**On Windows:**
-```
-set FLASK_APP=src.app
-set FLASK_ENV=development
-flask run --host=0.0.0.0 --port=5000
-```
-
-**On macOS / Linux:**
-```
-export FLASK_APP=src.app
-export FLASK_ENV=development
-flask run --host=0.0.0.0 --port=5000
-```
----
-
-## Step 7 — Use the App
-
-1. Open your browser and go to **http://localhost:5000**
-2. Drag and drop your requirements file onto the drop zone (or click to browse)
-3. Supported formats: **PDF**, **DOCX**, **XLSX**
-4. Click **"Extract Requirements →"**
-5. Wait 15–30 seconds for Gemini to process
-6. View the extracted requirements grouped by category
-7. Click **"Download JSON"** to save the structured output
-
----
-
-## Your Folder Should Look Like This
-
-```
-Zeaterz/
-├── app.py          ← the app (tracked by git — safe to push)
-├── .env            ← your private API key (NOT tracked — never push)
-└── .gitignore      ← tells git to ignore .env (tracked by git — safe to push)
-```
-
-Only `app.py` and `.gitignore` get pushed to GitHub. The `.env` file stays local forever.
-
----
-
-## Troubleshooting
-
-**"No API key found" warning on startup**
-→ Make sure `.env` exists in the same folder as `app.py`
-→ Make sure it contains exactly `GEMINI_API_KEY=your_key_here` with no quotes
-
-**"No module named flask" or similar error**
-→ Run the install command from Step 3 again
-→ Make sure your terminal is inside the `regcheck` folder
-
-**"Gemini returned an invalid response"**
-→ Try again — this is rare and usually fixes itself
-
-**Port 5000 already in use**
-→ Change `port=5000` to `port=5001` at the bottom of `app.py`
-→ Go to http://localhost:5001 instead
-
-**API key 404 or quota error**
-→ Make sure billing is enabled on your Google Cloud account
-→ Visit https://aistudio.google.com and confirm your project has billing linked
-
-**On Windows, use `python` and `pip` instead of `python3` and `pip3`**
-
----
-
-## Stopping the App
-
-Press `Ctrl+C` in the terminal.
-
----
-
-## AI Disclaimer
-
-This tool uses AI to extract and parse regulatory documents. All results should be
-independently verified by a qualified regulatory professional before use in any compliance
-or regulatory submission.
+- Batch check all requirements from an uploaded Excel/CSV
+- Export results to XLSX with update flags  
+- Add document summarization
+- Swap to Claude version once you have an Anthropic API key

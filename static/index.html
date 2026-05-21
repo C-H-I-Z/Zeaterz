@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sota — Regulatory Date Checker</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface2: #222;
+      --border: #2e2e2e;
+      --border2: #3a3a3a;
+      --text: #f0ede8;
+      --muted: #888;
+      --hint: #555;
+      --accent: #c8f55a;
+      --accent-dim: #a3c947;
+      --warn: #f5c842;
+      --success: #4caf7d;
+      --danger: #e05c5c;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'IBM Plex Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 3rem 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .header {
+      margin-bottom: 2.5rem;
+    }
+
+    .header .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .header p {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .field {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--border2);
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--hint);
+    }
+
+    button {
+      width: 100%;
+      background: var(--accent);
+      color: #0f0f0f;
+      border: none;
+      border-radius: 6px;
+      padding: 11px 20px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 0.5rem;
+    }
+
+    button:hover { background: var(--accent-dim); }
+    button:active { transform: scale(0.99); }
+    button:disabled { background: var(--border2); color: var(--hint); cursor: not-allowed; transform: none; }
+
+    .status {
+      margin-top: 1.5rem;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--muted);
+      display: none;
+    }
+
+    .status.visible { display: flex; align-items: center; gap: 8px; }
+
+    .spinner {
+      width: 12px; height: 12px;
+      border: 1.5px solid var(--border2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .result-card {
+      display: none;
+      margin-top: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .result-card.visible { display: block; }
+
+    .result-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .result-source-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--surface2);
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .result-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .dates-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .date-cell {
+      background: var(--surface);
+      padding: 1rem 1.25rem;
+    }
+
+    .date-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .date-value {
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .date-value.updated { color: var(--warn); }
+    .date-value.current { color: var(--success); }
+
+    .result-body {
+      padding: 1rem 1.25rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .status-badge.updated { background: rgba(245,200,66,0.12); color: var(--warn); }
+    .status-badge.current { background: rgba(76,175,125,0.12); color: var(--success); }
+    .status-badge.unknown { background: var(--surface2); color: var(--muted); }
+
+    .result-notes {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+
+    .result-source-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--hint);
+      margin-bottom: 12px;
+    }
+
+    .result-link a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .result-link a:hover { text-decoration: underline; }
+
+    .error-card {
+      display: none;
+      margin-top: 1.5rem;
+      background: rgba(224,92,92,0.08);
+      border: 1px solid rgba(224,92,92,0.25);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: 13px;
+      color: var(--danger);
+      font-family: var(--mono);
+    }
+
+    .error-card.visible { display: block; }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="label">Sota / Regulatory Checker</div>
+    <h1>Document Date Checker</h1>
+    <p>Enter a requirement name and we'll search the source to find the latest date.</p>
+  </div>
+
+  <div class="field">
+    <label>Requirement name *</label>
+    <input type="text" id="req-name" placeholder="e.g. 21 CFR Part 820  or  ISO 13485  or  ASTM F88" />
+  </div>
+
+  <div class="field">
+    <label>Description (optional)</label>
+    <input type="text" id="req-desc" placeholder="e.g. Quality System Regulation (QSR)" />
+  </div>
+
+  <div class="field">
+    <label>Current date in your document (optional)</label>
+    <input type="text" id="req-date" placeholder="e.g. April 2020" />
+  </div>
+
+  <button id="search-btn" onclick="runSearch()">Search →</button>
+
+  <div class="status" id="status">
+    <div class="spinner"></div>
+    <span id="status-text">Searching…</span>
+  </div>
+
+  <div class="result-card" id="result-card">
+    <div class="result-header">
+      <div class="result-source-tag" id="result-source"></div>
+      <div class="result-title" id="result-title"></div>
+    </div>
+    <div class="dates-grid">
+      <div class="date-cell">
+        <div class="date-label">In your document</div>
+        <div class="date-value" id="result-current">—</div>
+      </div>
+      <div class="date-cell">
+        <div class="date-label">Latest found</div>
+        <div class="date-value" id="result-latest">—</div>
+      </div>
+    </div>
+    <div class="result-body">
+      <div class="status-badge" id="status-badge"></div>
+      <div class="result-notes" id="result-notes"></div>
+      <div class="result-source-note" id="result-source-note"></div>
+      <div class="result-link" id="result-link"></div>
+    </div>
+  </div>
+
+  <div class="error-card" id="error-card"></div>
+
+</div>
+
+<script>
+  let running = false;
+
+  function setStatus(msg) {
+    const el = document.getElementById('status');
+    document.getElementById('status-text').textContent = msg;
+    el.className = msg ? 'status visible' : 'status';
+  }
+
+  function hideAll() {
+    document.getElementById('result-card').className = 'result-card';
+    document.getElementById('error-card').className = 'error-card';
+    setStatus('');
+  }
+
+  async function runSearch() {
+    if (running) return;
+    const name = document.getElementById('req-name').value.trim();
+    if (!name) {
+      document.getElementById('error-card').textContent = 'Please enter a requirement name.';
+      document.getElementById('error-card').className = 'error-card visible';
+      return;
+    }
+
+    running = true;
+    hideAll();
+    document.getElementById('search-btn').disabled = true;
+    setStatus('Searching regulatory sources…');
+
+    try {
+      const resp = await fetch('/api/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          description: document.getElementById('req-desc').value.trim(),
+          currentDate: document.getElementById('req-date').value.trim()
+        })
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json();
+        throw new Error(err.detail || 'Server error');
+      }
+
+      const data = await resp.json();
+      setStatus('');
+
+      document.getElementById('result-source').textContent = data.source || 'Regulatory';
+      document.getElementById('result-title').textContent = data.title || name;
+      document.getElementById('result-current').textContent = document.getElementById('req-date').value.trim() || '—';
+
+      const latestEl = document.getElementById('result-latest');
+      latestEl.textContent = data.latestDate || '—';
+      latestEl.className = 'date-value ' + (data.status === 'updated' ? 'updated' : data.status === 'current' ? 'current' : '');
+
+      const badge = document.getElementById('status-badge');
+      if (data.status === 'updated') {
+        badge.textContent = '⚠ Newer version may be available';
+        badge.className = 'status-badge updated';
+      } else if (data.status === 'current') {
+        badge.textContent = '✓ Up to date';
+        badge.className = 'status-badge current';
+      } else {
+        badge.textContent = '? Status unknown';
+        badge.className = 'status-badge unknown';
+      }
+
+      document.getElementById('result-notes').textContent = data.notes || '';
+      document.getElementById('result-source-note').textContent = data.dateSource ? 'Source: ' + data.dateSource : '';
+
+      const linkDiv = document.getElementById('result-link');
+      linkDiv.innerHTML = data.url ? `<a href="${data.url}" target="_blank">View source ↗</a>` : '';
+
+      document.getElementById('result-card').className = 'result-card visible';
+
+    } catch (err) {
+      setStatus('');
+      document.getElementById('error-card').textContent = err.message;
+      document.getElementById('error-card').className = 'error-card visible';
+    }
+
+    running = false;
+    document.getElementById('search-btn').disabled = false;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') runSearch();
+  });
+</script>
+</body>
+</html>
