@@ -11,15 +11,15 @@ var disclaimer  = document.getElementById('disclaimer');
 var dbSuccess   = document.getElementById('dbSuccess');
 var dbError     = document.getElementById('dbError');
 var dbWarning   = document.getElementById('dbWarning');
-
 var selectedFile = null;
-
 var ALLOWED = ['pdf', 'docx', 'xlsx'];
 var FILE_ICONS = { pdf: '&#128212;', docx: '&#128216;', xlsx: '&#128218;' };
+
 
 function getExt(filename) {
   return filename.split('.').pop().toLowerCase();
 }
+
 
 dropZone.addEventListener('dragover', function(e) {
   e.preventDefault();
@@ -47,6 +47,7 @@ fileInput.addEventListener('change', function() {
   }
 });
 
+
 function setFile(file) {
   selectedFile = file;
   var ext = getExt(file.name);
@@ -65,6 +66,7 @@ function setFile(file) {
   hideDbBanners();
 }
 
+
 function clearFile() {
   selectedFile = null;
   fileInput.value = '';
@@ -78,11 +80,13 @@ function clearFile() {
   hideDbBanners();
 }
 
+
 function hideDbBanners() {
   dbSuccess.classList.remove('visible');
   dbError.classList.remove('visible');
   dbWarning.classList.remove('visible');
 }
+
 
 function submitFile() {
   if (!selectedFile) return;
@@ -113,16 +117,19 @@ function submitFile() {
         document.getElementById('dbSuccessMsg').textContent =
           data.db_count + ' standards saved to database successfully.';
         dbSuccess.classList.add('visible');
+
       } else if (data.db_error) {
         document.getElementById('dbErrorMsg').textContent =
           'Could not save to database: ' + data.db_error;
         dbError.classList.add('visible');
+
       } else if (data.db_not_configured) {
         dbWarning.classList.add('visible');
       }
 
       disclaimer.style.display = 'block';
       renderResults(data.requirements, data.filename);
+
     })
     .catch(function(err) {
       statusBox.classList.remove('visible');
@@ -132,6 +139,7 @@ function submitFile() {
     });
 }
 
+
 function renderResults(requirements, filename) {
   results.style.display = 'block';
 
@@ -140,11 +148,13 @@ function renderResults(requirements, filename) {
   var banner = document.getElementById('manualReviewBanner');
   if (manualCount > 0) {
     banner.classList.add('visible');
+
   } else {
     banner.classList.remove('visible');
   }
 
   var categories = {};
+
   requirements.forEach(function(r) {
     var cat = r.category || 'Uncategorized';
     if (!categories[cat]) categories[cat] = [];
@@ -168,6 +178,7 @@ function renderResults(requirements, filename) {
   jsonBtn.href = URL.createObjectURL(jsonBlob);
   jsonBtn.download = filename.replace(/[.](pdf|docx|xlsx)$/i, '_requirements.json');
 
+  // Building CSV of results upon user request
   var csvBtn = document.getElementById('downloadCsv');
   csvBtn.onclick = function(e) {
     e.preventDefault();
@@ -200,13 +211,14 @@ function renderResults(requirements, filename) {
   var container = document.getElementById('categorySections');
   container.innerHTML = '';
 
+  // Add requirements information to main page after uploading document
   Object.keys(categories).forEach(function(cat) {
     var items = categories[cat];
     var rows  = items.map(function(item) {
       var isManual    = item.needs_manual_review;
       var dateClass   = isManual ? 'date-chip manual' : 'date-chip';
       var dateDisplay = isManual ? item.date + ' *' : item.date;
-      var reviewFlag  = isManual ? '<span class="review-flag">Verify Manually</span>' : '';
+      var reviewFlag  = isManual ? '<span class="review-flag">Verify Manually</span>' : item.status;
       var regionClass = item.region === 'US' ? 'badge-us' : 'badge-intl';
       return '<tr class="' + (isManual ? 'needs-review' : '') + '">' +
         '<td><span class="std-id">' + (item.standard_id || '') + '</span></td>' +
@@ -236,6 +248,7 @@ function renderResults(requirements, filename) {
 
   results.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
 
 function showError(msg) {
   errorBox.textContent = 'Error: ' + msg;
