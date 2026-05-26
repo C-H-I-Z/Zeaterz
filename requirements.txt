@@ -1,0 +1,8 @@
+flask
+google-genai
+httpx
+pdfplumber
+python-docx
+openpyxl
+python-dotenv
+gunicorn
