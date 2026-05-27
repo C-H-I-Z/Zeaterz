@@ -1,23 +1,11 @@
 """
-Medical Device Requirements Extractor - Local Web App
-Rallis-Daw Consulting | RegCheck Tool
-------------------------------------------------------
-Supports PDF, Word (.docx), and Excel (.xlsx) files.
-Extracts regulatory standards using Gemini AI and stores
-results in Supabase.
-
+Sota — Regulatory Requirement Management System
+Rallis-Daw Consulting LLC
+Routes only. All logic lives in parser.py, checker.py, comparator.py.
 SETUP:
-    pip3 install flask google-generativeai pdfplumber python-docx openpyxl python-dotenv supabase
-
-CREATE A .env FILE in this same folder containing:
-    GEMINI_API_KEY=your_gemini_api_key
-    SUPABASE_URL=your_supabase_project_url
-    SUPABASE_KEY=your_supabase_anon_key
-
-RUN:
-    python3 app.py
-
-Then open your browser to: http://localhost:5000
+    pip install -r requirements.txt
+    Create .env with GEMINI_API_KEY=your_key
+    python app.py  →  http://localhost:5000
 """
 
 import os
