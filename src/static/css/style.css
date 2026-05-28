@@ -165,7 +165,7 @@ footer {
   color: var(--blue);
   letter-spacing: 0.14em; 
   text-transform: uppercase; 
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .page-heading {
@@ -187,38 +187,40 @@ footer {
 
 /* ── ABOUT & HELP CONTENT ────────────────────────────────────────────────────────────── */
 
-.info-card p,
-.info-card li {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.7;
-  font-weight: 500;
-}
-
-.info-card ul {
-  padding-left: 18px;
-}
-
 .info-card {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 28px;
+  padding: 24px;
   box-shadow: 0 8px 30px rgba(26,47,94,0.12);
-  max-width: 620px;
+  max-width: 900px;
 }
 
 .info-card h3 {
   font-size: 15px;
   color: var(--navy);
   margin: 12px 0 8px;
+  margin-top: 24px;
+}
+
+.info-card p,
+.info-card li {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.info-card ul {
+  padding-left: 24px;
 }
 
 .help-about-medtech {
   position: relative;
   top: auto;
   transform: none;
-  margin: 0 16px 0;
+  margin: 0 0 0;
 }
 
 .help-about-medtech img {
