@@ -181,7 +181,7 @@ footer {
   font-size: 13px; 
   color: var(--muted); 
   font-weight: 500;
-  margin-bottom: 36px; 
+  margin-bottom: 48px; 
   letter-spacing: 0.02em;
 }
 
@@ -211,19 +211,19 @@ footer {
 .info-card h3 {
   font-size: 15px;
   color: var(--navy);
-  margin: 18px 0 8px;
+  margin: 12px 0 8px;
 }
 
 .help-about-medtech {
   position: relative;
   top: auto;
   transform: none;
-  margin: 0 16px 0 auto;
+  margin: 0 16px 0;
 }
 
 .help-about-medtech img {
   width: 100%;
-  max-width: 230px;
+  max-width: 250px;
   height: auto;
   object-fit: contain;
   border-radius: 12px;
@@ -529,8 +529,11 @@ footer {
 .modal-overlay.visible { display: flex; }
 
 .modal {
-  background: var(--white); border-radius: 12px;
-  padding: 28px; width: 100%; max-width: 560px;
+  background: var(--white); 
+  border-radius: 12px;
+  padding: 28px; 
+  width: 100%; 
+  max-width: 600px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
   max-height: 90vh; overflow-y: auto;
 }
@@ -582,12 +585,17 @@ footer {
 
 /* ── LANDING PAGE HERO ──────────────────────────────────────────────────────── */
 .hero {
-  position: relative; z-index: 5; flex: 1;
-  display: flex; align-items: center;
-  padding: 80px 56px;
+  position: relative; 
+  z-index: 5; 
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  display: flex; 
+  justify-content: space-between;
+  padding: 50px 56px;
 }
 
-.hero-content { max-width: 520px; }
+.hero-content { max-width: 550px; }
 
 .hero-tag {
   font-size: 11px; font-weight: 700; color: var(--blue);
@@ -614,17 +622,29 @@ footer {
 
 .hero-desc {
   font-size: 14px; color: var(--muted); font-weight: 500;
-  line-height: 1.75; margin-bottom: 40px; max-width: 420px;
+  line-height: 1.75; margin-bottom: 12px; max-width: 580px;
 }
 
 .btn-enter {
-  display: inline-flex; align-items: center; gap: 12px;
-  background: var(--navy); color: var(--white);
-  border: none; border-radius: 8px; padding: 18px 36px;
-  font-family: var(--font); font-size: 13px; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
-  cursor: pointer; transition: all 0.25s;
+  display: inline-flex; 
+  align-items: center; 
+  gap: 12px;
+  background: var(--navy); 
+  color: var(--white);
+  border: none; 
+  border-radius: 8px; 
+  padding: 18px 36px;
+  font-family: var(--font); 
+  font-size: 13px; 
+  font-weight: 700;
+  letter-spacing: 0.12em; 
+  text-transform: uppercase; 
+  text-decoration: none;
+  cursor: pointer; 
+  transition: all 0.25s;
   box-shadow: 0 4px 20px rgba(26,47,94,0.3);
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 .btn-enter:hover { background: var(--blue); box-shadow: 0 6px 28px rgba(46,109,180,0.4); transform: translateY(-1px); }
 .btn-enter-arrow { font-size: 18px; transition: transform 0.2s; }
