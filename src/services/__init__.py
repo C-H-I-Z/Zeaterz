@@ -1,5 +1,7 @@
-from .text_extraction import extract_text
-from .database_maintenance import enrich_requirement, insert_to_supabase
-from .reg_web_scraper import parse_date, check_compliance_date
+from .checker import check_requirement
+from .comparator import compare_requirement
+from .parser import enrich_requirement, extract_text, parse_with_gemini
 
-__all__ = ["extract_text", "enrich_requirement", "insert_to_supabase", "parse_date", "check_compliance_date"]
+
+
+__all__ = ["check_requirement", "compare_requirement", "enrich_requirement", "extract_text", "parse_with_gemini"]

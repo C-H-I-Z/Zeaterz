@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Requirements &mdash; Sota</title>
+<link rel="icon" href="{{ url_for('static', filename='images/rallis-daw logo.png') }}" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+  <body>
+    <div class="page">
+
+      <svg class="wave-bg" viewBox="0 0 1440 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="wv1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#4a4892" stop-opacity="0.72"/>
+            <stop offset="100%" stop-color="#5e55b8" stop-opacity="0.65"/>
+          </linearGradient>
+          <linearGradient id="wv2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#3878d4" stop-opacity="0.60"/>
+            <stop offset="100%" stop-color="#4b9ee8" stop-opacity="0.52"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,240 C280,172 540,130 780,172 C1020,214 1210,136 1440,120 L1440,560 L0,560 Z"
+              fill="url(#wv1)" opacity="0.72"/>
+        <path d="M0,332 C200,284 400,242 620,266 C800,286 990,218 1200,242 C1350,260 1410,224 1440,210 L1440,560 L0,560 Z"
+              fill="url(#wv2)" opacity="0.60"/>
+        <path d="M0,408 C160,372 310,332 468,352 C596,368 698,316 820,336 C916,352 974,332 1080,392 C1176,440 1316,380 1440,350 L1440,560 L0,560 Z"
+              fill="#4dc8e8" opacity="0.28"/>
+      </svg>
+
+      <header>
+        <div class="logo-wrap">
+          <img class="logo-img"
+            src="https://static.wixstatic.com/media/9f2dc8_980147f3f25a4e50a2220ab0bd98dba8~mv2.png/v1/fill/w_129,h_128,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sig%20logo.png"
+            alt="Rallis-Daw Consulting">
+        </div>
+        <div class="header-right">
+          <nav class="nav-links">
+            <a href="/about">About</a>
+            <a href="/help">Help</a>
+          </nav>
+
+          <div class="token-counter" id="tokenCounter">
+            <span class="token-dot"></span>
+            <span id="tokenText">0 tokens</span>
+          </div>
+          <div class="tool-label">Sota &mdash; RegCheck</div>
+        </div>
+      </header>
+
+      <div class="content">
+
+        <div class="page-title">Step 2 of 3 &mdash; Review Extracted Requirements</div>
+        <div class="page-heading">Review &amp; Edit</div>
+        <div class="page-sub" id="pageSub">Review every requirement below. Click any row to edit, add missing entries, or delete incorrect ones.</div>
+
+        <!-- Manual review banner -->
+        <div class="manual-review-banner" id="manualReviewBanner">
+          <strong>Manual Review Required</strong> &mdash; Some requirements are marked
+          <strong>"Current"</strong> because the source document used <strong>**</strong> instead
+          of a specific date. These will be marked <strong>Unverified</strong> during the compliance
+          check and must be verified manually.
+        </div>
+
+        <!-- Stats row -->
+        <div class="stats-row" id="statsRow"></div>
+
+        <!-- Table actions -->
+        <div class="results-header">
+          <div class="results-heading">Extracted Requirements</div>
+          <div class="btn-group">
+            <button type="button" class="action-btn btn-add-row" onclick="addRow()">+ Add Row</button>
+            <button type="button" class="action-btn btn-approve" onclick="approve()" id="approveBtn">
+              &#10003; Approve &amp; Run Check &#8594;
+            </button>
+          </div>
+        </div>
+
+        <p class="edit-hint">Click any row to edit. Use + Add Row to add missing standards.</p>
+
+        <div class="results-table-wrap">
+          <table class="results-table" id="resultsTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Standard ID</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Region</th>
+                <th>Description</th>
+                <th>Review Flag</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <footer>
+        &copy; Rallis-Daw Consulting LLC &nbsp;&middot;&nbsp; Sota &nbsp;&middot;&nbsp; For internal use only
+      </footer>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-title" id="modalTitle">Edit Standard</div>
+        <div class="modal-grid">
+          <div class="modal-field">
+            <label>Standard ID</label>
+            <input type="text" id="editStandardId" placeholder="e.g. ISO 13485">
+          </div>
+          <div class="modal-field">
+            <label>Date</label>
+            <input type="text" id="editDate" placeholder="e.g. 2019 or May 2025">
+          </div>
+          <div class="modal-field">
+            <label>Category</label>
+            <input type="text" id="editCategory" placeholder="e.g. Quality System Management">
+          </div>
+          <div class="modal-field">
+            <label for="editRegion">Region</label>
+            <select id="editRegion">
+              <option value="US">US</option>
+              <option value="International">International</option>
+            </select>
+          </div>
+          <div class="modal-field modal-field-full">
+            <label>Description</label>
+            <textarea id="editDescription" placeholder="Brief description of this standard"></textarea>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-modal-delete" id="modalDeleteBtn" onclick="deleteRow()">Delete Row</button>
+          <button type="button" class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
+          <button type="button" class="btn-modal-save" onclick="saveModal()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ── STATE ─────────────────────────────────────────────────────────────────────
+
+      var currentData  = [];
+      var editingIndex = null;
+      var currentFilename = '';
+
+      // ── INIT ──────────────────────────────────────────────────────────────────────
+
+      (function init() {
+        var raw = sessionStorage.getItem('sota_requirements');
+        if (!raw) { window.location.href = '/upload'; return; }
+
+        currentData     = JSON.parse(raw);
+        currentFilename = sessionStorage.getItem('sota_filename') || '';
+
+        var tokens = JSON.parse(sessionStorage.getItem('sota_extract_tokens') || '{"total":0}');
+        var cost   = sessionStorage.getItem('sota_extract_cost') || '$0.0000';
+
+        if (tokens.total > 0) {
+          document.getElementById('tokenText').textContent =
+            tokens.total.toLocaleString() + ' tokens (extraction) · ' + cost;
+          document.getElementById('tokenCounter').classList.add('visible');
+        }
+
+        renderTable();
+      })();
+
+      // ── RENDER ────────────────────────────────────────────────────────────────────
+
+      function renderTable() {
+        var manualCount = currentData.filter(function(r) { return r.needs_manual_review; }).length;
+        var banner = document.getElementById('manualReviewBanner');
+        if (manualCount > 0) banner.classList.add('visible');
+        else banner.classList.remove('visible');
+
+        var usCount   = currentData.filter(function(r) { return r.region === 'US'; }).length;
+        var intlCount = currentData.filter(function(r) { return r.region === 'International'; }).length;
+        var cats      = {};
+        currentData.forEach(function(r) { cats[r.category || 'Uncategorized'] = true; });
+        var catCount  = Object.keys(cats).length;
+
+        var warnClass = manualCount > 0 ? ' warning-card' : '';
+        var warnNum   = manualCount > 0 ? ' warning' : '';
+
+        document.getElementById('statsRow').innerHTML =
+          '<div class="stat-card"><div class="stat-number">' + currentData.length + '</div><div class="stat-label">Total Requirements</div></div>' +
+          '<div class="stat-card"><div class="stat-number">' + catCount + '</div><div class="stat-label">Categories</div></div>' +
+          '<div class="stat-card"><div class="stat-number">' + usCount + '</div><div class="stat-label">US Standards</div></div>' +
+          '<div class="stat-card' + warnClass + '"><div class="stat-number' + warnNum + '">' + manualCount + '</div><div class="stat-label">Verify Manually</div></div>';
+
+        var tbody = document.getElementById('resultsBody');
+        tbody.innerHTML = '';
+
+        for (var i = 0; i < currentData.length; i++) {
+          (function(idx) {
+            var item      = currentData[idx];
+            var isManual  = item.needs_manual_review;
+            var dateClass = isManual ? 'date-chip manual' : 'date-chip';
+            var dateDisp  = (item.date || '') + (isManual ? ' *' : '');
+            var regionCls = item.region === 'US' ? 'badge-us' : 'badge-intl';
+            var flag      = isManual ? '<span class="review-flag">Verify Manually</span>' : '';
+            var desc      = (item.description || '').length > 120
+                            ? item.description.substring(0, 120) + '...'
+                            : (item.description || '');
+
+            var tr = document.createElement('tr');
+            tr.className = isManual ? 'needs-review' : '';
+            tr.onclick   = function() { openModal(idx); };
+            tr.innerHTML =
+              '<td style="color:var(--muted);font-size:11px">' + (idx + 1) + '</td>' +
+              '<td><span class="std-id">' + escHtml(item.standard_id || '') + '</span></td>' +
+              '<td><span class="' + dateClass + '">' + escHtml(dateDisp) + '</span></td>' +
+              '<td style="font-size:11px">' + escHtml(item.category || '') + '</td>' +
+              '<td><span class="badge ' + regionCls + '">' + escHtml(item.region || '') + '</span></td>' +
+              '<td style="font-size:11px;color:#4a5568;min-width:280px;max-width:480px">' + escHtml(desc) + '</td>' +
+              '<td>' + flag + '</td>';
+            tbody.appendChild(tr);
+          })(i);
+        }
+      }
+
+      // ── MODAL ─────────────────────────────────────────────────────────────────────
+
+      function openModal(index) {
+        editingIndex = index;
+        var item  = currentData[index];
+        var isNew = item._isNew || false;
+
+        document.getElementById('modalTitle').textContent            = isNew ? 'Add New Standard' : 'Edit Standard';
+        document.getElementById('editStandardId').value             = item.standard_id  || '';
+        document.getElementById('editDate').value                   = item.date         || '';
+        document.getElementById('editCategory').value               = item.category     || '';
+        document.getElementById('editRegion').value                 = item.region       || 'US';
+        document.getElementById('editDescription').value            = item.description  || '';
+        document.getElementById('modalDeleteBtn').style.display     = isNew ? 'none' : '';
+        document.getElementById('modalOverlay').classList.add('visible');
+      }
+
+      function closeModal() {
+        if (editingIndex !== null && currentData[editingIndex] && currentData[editingIndex]._isNew) {
+          currentData.splice(editingIndex, 1);
+          renderTable();
+        }
+        editingIndex = null;
+        document.getElementById('modalOverlay').classList.remove('visible');
+      }
+
+      function saveModal() {
+        if (editingIndex === null) return;
+
+        var stdId   = document.getElementById('editStandardId').value.trim();
+        var dateVal = document.getElementById('editDate').value.trim();
+        var cat     = document.getElementById('editCategory').value.trim();
+        var region  = document.getElementById('editRegion').value;
+        var desc    = document.getElementById('editDescription').value.trim();
+
+        if (!stdId) { alert('Standard ID is required.'); return; }
+
+        var isCurrent = dateVal.toLowerCase() === 'current' || dateVal === '**' || dateVal === '';
+        var yearMatch = dateVal.match(/\b(19|20)\d{2}\b/);
+        var dateYear  = yearMatch ? parseInt(yearMatch[0]) : null;
+
+        currentData[editingIndex] = {
+          id:                  currentData[editingIndex].id || (currentData.length + 1),
+          standard_id:         stdId,
+          date:                dateVal,
+          date_year:           dateYear,
+          category:            cat,
+          region:              region,
+          description:         desc,
+          needs_manual_review: isCurrent,
+          source_filename:     currentFilename,
+          uploaded_at:         currentData[editingIndex].uploaded_at || new Date().toISOString(),
+          status:              null,
+          current_version:     null,
+          source_url:          null,
+        };
+
+        editingIndex = null;
+        document.getElementById('modalOverlay').classList.remove('visible');
+        renderTable();
+      }
+
+      function deleteRow() {
+        if (editingIndex === null) return;
+        if (!confirm('Delete this row? This cannot be undone.')) return;
+        currentData.splice(editingIndex, 1);
+        editingIndex = null;
+        document.getElementById('modalOverlay').classList.remove('visible');
+        renderTable();
+      }
+
+      // ── ADD ROW ───────────────────────────────────────────────────────────────────
+
+      function addRow() {
+        currentData.push({
+          id: currentData.length + 1,
+          standard_id: '', date: '', date_year: null, category: '',
+          region: 'US', description: '', needs_manual_review: false,
+          source_filename: currentFilename, uploaded_at: new Date().toISOString(),
+          status: null, current_version: null, source_url: null, _isNew: true,
+        });
+        renderTable();
+        setTimeout(function() { openModal(currentData.length - 1); }, 80);
+      }
+
+      // ── APPROVE ───────────────────────────────────────────────────────────────────
+
+      function approve() {
+        if (currentData.length === 0) { alert('No requirements to check.'); return; }
+
+        // Strip _isNew flags before saving
+        var clean = currentData.map(function(r) {
+          var c = {};
+          for (var k in r) { if (k !== '_isNew') c[k] = r[k]; }
+          return c;
+        });
+
+        sessionStorage.setItem('sota_requirements', JSON.stringify(clean));
+        window.location.href = '/results';
+      }
+
+      // ── UTILITIES ─────────────────────────────────────────────────────────────────
+
+      function escHtml(s) {
+        return String(s)
+          .replace(/&/g,  '&amp;')
+          .replace(/</g,  '&lt;')
+          .replace(/>/g,  '&gt;')
+          .replace(/"/g,  '&quot;');
+      }
+
+      document.getElementById('modalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+      });
+    </script>
+  </body>
+</html>

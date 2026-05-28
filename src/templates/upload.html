@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload &mdash; Sota</title>
+<link rel="icon" href="{{ url_for('static', filename='images/rallis-daw logo.png') }}" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+  <body>
+    <div class="page">
+
+      <svg class="wave-bg" viewBox="0 0 1440 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="wv1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#4a4892" stop-opacity="0.72"/>
+            <stop offset="100%" stop-color="#5e55b8" stop-opacity="0.65"/>
+          </linearGradient>
+          <linearGradient id="wv2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#3878d4" stop-opacity="0.60"/>
+            <stop offset="100%" stop-color="#4b9ee8" stop-opacity="0.52"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,240 C280,172 540,130 780,172 C1020,214 1210,136 1440,120 L1440,560 L0,560 Z"
+              fill="url(#wv1)" opacity="0.72"/>
+        <path d="M0,332 C200,284 400,242 620,266 C800,286 990,218 1200,242 C1350,260 1410,224 1440,210 L1440,560 L0,560 Z"
+              fill="url(#wv2)" opacity="0.60"/>
+        <path d="M0,408 C160,372 310,332 468,352 C596,368 698,316 820,336 C916,352 974,332 1080,392 C1176,440 1316,380 1440,350 L1440,560 L0,560 Z"
+              fill="#4dc8e8" opacity="0.28"/>
+      </svg>
+
+      <header>
+        <div class="logo-wrap">
+          <img class="logo-img"
+            src="https://static.wixstatic.com/media/9f2dc8_980147f3f25a4e50a2220ab0bd98dba8~mv2.png/v1/fill/w_129,h_128,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sig%20logo.png"
+            alt="Rallis-Daw Consulting">
+        </div>
+        <div class="header-right">
+          <nav class="nav-links">
+            <a href="/about">About</a>
+            <a href="/help">Help</a>
+          </nav>
+
+          <div class="tool-label">Sota &mdash; RegCheck</div>
+        </div>
+      </header>
+
+      <div class="content content-narrow">
+
+        <div class="page-title">Step 1 of 3</div>
+        <div class="page-heading">Upload Document</div>
+        <div class="page-sub">Upload your External Documents List to extract all regulatory requirements</div>
+
+        <div class="upload-card">
+          <div class="card-title">
+            <div class="card-title-icon">&#128203;</div>
+            Document Upload
+          </div>
+
+          <div class="drop-zone" id="dropZone">
+            <!-- Accessible label for file input -->
+            <label for="fileInput" class="sr-only">Upload document (PDF, DOCX, or XLSX)</label>
+            <input type="file" id="fileInput" accept=".pdf,.docx,.xlsx" title="Upload document (PDF, DOCX, or XLSX)" aria-label="Upload document (PDF, DOCX, or XLSX)">
+            <span class="drop-icon" id="dropIcon">&#9729;</span>
+            <div class="drop-title" id="dropTitle">Drag &amp; Drop or Upload a File</div>
+            <div class="drop-sub" id="dropSub">Click anywhere in this box to browse</div>
+            <div class="file-types">
+              <span class="type-badge type-pdf">PDF</span>
+              <span class="type-badge type-docx">DOCX</span>
+              <span class="type-badge type-xlsx">XLSX</span>
+            </div>
+          </div>
+
+          <div class="file-preview" id="filePreview">
+            <div class="file-info">
+              <span class="file-icon-wrap" id="fileTypeIcon">&#128196;</span>
+              <span class="file-name" id="fileName"></span>
+            </div>
+            <button class="file-clear" onclick="clearFile()">Remove</button>
+          </div>
+
+          <div class="submit-wrap" id="submitWrap">
+            <button class="btn-submit" id="submitBtn" onclick="submitFile()">
+              Extract Requirements
+            </button>
+          </div>
+
+          <div class="status-box" id="statusBox">
+            <div class="spinner"></div>
+            <div class="status-text" id="statusText">Sending to Gemini AI &mdash; this may take 15&ndash;30 seconds&hellip;</div>
+          </div>
+
+          <div class="error-box" id="errorBox"></div>
+
+          <div class="disclaimer" id="disclaimer">
+            AI DISCLAIMER &mdash; Extraction results must be reviewed before proceeding.
+            Verify all outputs with a qualified regulatory professional.
+          </div>
+        </div>
+
+      </div>
+
+      <footer>
+        &copy; Rallis-Daw Consulting LLC &nbsp;&middot;&nbsp; Sota &nbsp;&middot;&nbsp; For internal use only
+      </footer>
+    </div>
+
+    <script>
+      var dropZone   = document.getElementById('dropZone');
+      var fileInput  = document.getElementById('fileInput');
+      var filePreview = document.getElementById('filePreview');
+      var submitWrap = document.getElementById('submitWrap');
+      var submitBtn  = document.getElementById('submitBtn');
+      var statusBox  = document.getElementById('statusBox');
+      var errorBox   = document.getElementById('errorBox');
+      var disclaimer = document.getElementById('disclaimer');
+
+      var selectedFile = null;
+      var ALLOWED    = ['pdf', 'docx', 'xlsx'];
+      var FILE_ICONS = { pdf: '&#128212;', docx: '&#128216;', xlsx: '&#128218;' };
+
+      function getExt(name) { return name.split('.').pop().toLowerCase(); }
+
+      dropZone.addEventListener('dragover', function(e) { e.preventDefault(); dropZone.classList.add('dragover'); });
+      dropZone.addEventListener('dragleave', function()  { dropZone.classList.remove('dragover'); });
+      dropZone.addEventListener('drop', function(e) {
+        e.preventDefault(); dropZone.classList.remove('dragover');
+        var f = e.dataTransfer.files[0];
+        if (f && ALLOWED.indexOf(getExt(f.name)) !== -1) setFile(f);
+        else showError('Please drop a PDF, DOCX, or XLSX file.');
+      });
+
+      fileInput.addEventListener('change', function() {
+        if (fileInput.files[0]) setFile(fileInput.files[0]);
+      });
+
+      function setFile(file) {
+        selectedFile = file;
+        var ext = getExt(file.name);
+        dropZone.classList.add('has-file');
+        document.getElementById('dropIcon').innerHTML  = '&#10003;';
+        document.getElementById('dropTitle').textContent = 'File ready';
+        document.getElementById('dropSub').textContent   = 'Drop a different file to replace it';
+        document.getElementById('fileTypeIcon').innerHTML = FILE_ICONS[ext] || '&#128196;';
+        document.getElementById('fileName').textContent   = file.name;
+        filePreview.classList.add('visible');
+        submitWrap.classList.add('visible');
+        errorBox.style.display = 'none';
+        disclaimer.style.display = 'none';
+      }
+
+      function clearFile() {
+        selectedFile = null;
+        fileInput.value = '';
+        dropZone.classList.remove('has-file');
+        document.getElementById('dropIcon').innerHTML    = '&#9729;';
+        document.getElementById('dropTitle').textContent = 'Drag & Drop or Upload a File';
+        document.getElementById('dropSub').textContent   = 'Click anywhere in this box to browse';
+        filePreview.classList.remove('visible');
+        submitWrap.classList.remove('visible');
+        errorBox.style.display = 'none';
+      }
+
+      function submitFile() {
+        if (!selectedFile) return;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing…';
+        errorBox.style.display = 'none';
+        statusBox.classList.add('visible');
+
+        var formData = new FormData();
+        formData.append('file', selectedFile);
+
+        fetch('/extract', { method: 'POST', body: formData })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            statusBox.classList.remove('visible');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Extract Requirements';
+
+            if (data.error) { showError(data.error); return; }
+
+            // Store in sessionStorage and navigate to review page
+            sessionStorage.setItem('sota_requirements',    JSON.stringify(data.requirements));
+            sessionStorage.setItem('sota_filename',         data.filename);
+            sessionStorage.setItem('sota_extract_tokens',  JSON.stringify(data.tokens));
+            sessionStorage.setItem('sota_extract_cost',    data.cost);
+
+            disclaimer.style.display = 'block';
+            window.location.href = '/review';
+          })
+          .catch(function(err) {
+            statusBox.classList.remove('visible');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Extract Requirements';
+            showError('Server error: ' + err.message);
+          });
+      }
+
+      function showError(msg) {
+        errorBox.textContent = 'Error: ' + msg;
+        errorBox.style.display = 'block';
+      }
+    </script>
+  </body>
+</html>
