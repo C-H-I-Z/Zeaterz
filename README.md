@@ -1,11 +1,11 @@
-# Sota — Regulatory Requirement Management System
+# SOTA — Regulatory Requirement Management System
 ### Rallis-Daw Consulting LLC | Medical Device Compliance Tool
 
 ---
 
 ## What This Does
 
-Sota helps medical device consultants automatically check whether regulatory requirements
+SOTA helps medical device consultants automatically check whether regulatory requirements
 on a device's External Documents List are current or outdated. Upload a PDF, DOCX, or XLSX
 file, review the AI-extracted requirements, then run a live compliance check that searches
 major regulatory websites for the latest version of each standard.
@@ -198,7 +198,7 @@ You should see:
 
 ```
 ==================================================
-  Sota  —  Rallis-Daw Consulting
+  SOTA  —  Rallis-Daw Consulting
   Regulatory Requirement Management System
 ==================================================
   OK: Gemini API key loaded

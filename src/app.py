@@ -1,5 +1,5 @@
 """
-Sota — Regulatory Requirement Management System
+SOTA — Regulatory Requirement Management System
 Rallis-Daw Consulting LLC
 
 Routes only. All logic lives in parser.py, checker.py, comparator.py.
@@ -257,7 +257,7 @@ def export():
 
 # if __name__ == "__main__":
 #     print("\n" + "=" * 52)
-#     print("  Sota  —  Rallis-Daw Consulting")
+#     print("  SOTA  —  Rallis-Daw Consulting")
 #     print("  Regulatory Requirement Management System")
 #     print("=" * 52)
 
