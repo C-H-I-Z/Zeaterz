@@ -33,22 +33,58 @@ body {
   overflow-x: hidden;
 }
 
+.about-body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 /* ── LAYOUT ─────────────────────────────────────────────────────────────────── */
-.page { min-height: 100vh; position: relative; display: flex; flex-direction: column; }
+.page { 
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column; 
+}
+
+.help-about-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+}
+
+.help-about-left {
+  flex: 1 1 480px;
+  min-width: 280px;
+}
 
 /* ── WAVE BACKGROUND ────────────────────────────────────────────────────────── */
 .wave-bg {
-  position: fixed; bottom: 0; left: 0;
-  width: 100%; height: 62vh;
-  pointer-events: none; z-index: 0;
+  position: fixed; 
+  bottom: 0; 
+  left: 0;
+  width: 100%; 
+  height: 62vh;
+  pointer-events: none; 
+  z-index: 0;
 }
 
 /* ── HEADER ─────────────────────────────────────────────────────────────────── */
 header {
-  position: relative; z-index: 10;
+  position: relative; 
+  z-index: 10;
   background: var(--white);
   padding: 16px 48px;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 12px rgba(26,47,94,0.08);
 }
@@ -84,9 +120,14 @@ header {
 .header-right { display: flex; align-items: center; gap: 16px; }
 
 .tool-label {
-  font-size: 11px; font-weight: 700; color: var(--muted);
-  letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 3px 10px; border: 1px solid var(--border); border-radius: 3px;
+  font-size: 11px; 
+  font-weight: 700; 
+  color: var(--muted);
+  letter-spacing: 0.14em; 
+  text-transform: uppercase;
+  padding: 3px 10px; 
+  border: 1px solid var(--border); 
+  border-radius: 3px;
 }
 
 /* ── TOKEN COUNTER ──────────────────────────────────────────────────────────── */
@@ -119,18 +160,88 @@ footer {
 .content-narrow { max-width: 780px; }
 
 .page-title {
-  font-size: 13px; font-weight: 700; color: var(--blue);
-  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px;
+  font-size: 13px; 
+  font-weight: 700; 
+  color: var(--blue);
+  letter-spacing: 0.14em; 
+  text-transform: uppercase; 
+  margin-bottom: 8px;
 }
 
 .page-heading {
-  font-size: 36px; font-weight: 800; color: var(--navy);
-  line-height: 1.15; margin-bottom: 8px; letter-spacing: -0.01em;
+  font-size: 36px; 
+  font-weight: 800; 
+  color: var(--navy);
+  line-height: 1.15; 
+  margin-bottom: 8px; 
+  letter-spacing: -0.01em;
 }
 
 .page-sub {
-  font-size: 13px; color: var(--muted); font-weight: 500;
-  margin-bottom: 36px; letter-spacing: 0.02em;
+  font-size: 13px; 
+  color: var(--muted); 
+  font-weight: 500;
+  margin-bottom: 36px; 
+  letter-spacing: 0.02em;
+}
+
+/* ── ABOUT & HELP CONTENT ────────────────────────────────────────────────────────────── */
+
+.info-card p,
+.info-card li {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.info-card ul {
+  padding-left: 18px;
+}
+
+.info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 8px 30px rgba(26,47,94,0.12);
+  max-width: 620px;
+}
+
+.info-card h3 {
+  font-size: 15px;
+  color: var(--navy);
+  margin: 18px 0 8px;
+}
+
+.help-about-medtech {
+  position: relative;
+  top: auto;
+  transform: none;
+  margin: 0 16px 0 auto;
+}
+
+.help-about-medtech img {
+  width: 100%;
+  max-width: 230px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.help-about-animation {
+  position: relative;
+  top: auto;
+  right: auto;
+  transform: translateY(-50%);
+  width: 600px;
+}
+
+.help-about-animation img {
+  width: 100%;
+  max-width: 230px;
+  height: auto;
+  object-fit: contain;
 }
 
 /* ── UPLOAD CARD ────────────────────────────────────────────────────────────── */
