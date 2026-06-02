@@ -97,6 +97,44 @@
         </div>
 
         <div class="results-table-wrap">
+          <!-- Filter Controls -->
+          <div id="filter-bar" class="filter-bar" style="display:none">
+            <input 
+              type="text" 
+              id="filter-search" 
+              class="filter-input" 
+              placeholder="Search by standard body or review flag..."
+            />
+
+            <select id="filter-region" class="filter-select">
+              <option value="">All Regions</option>
+              <option value="US">US</option>
+              <option value="International">International</option>
+            </select>
+
+            <select id="filter-standard" class="filter-select">
+              <option value="">All Standards</option>
+              <option value="iso">ISO</option>
+              <option value="ecfr">eCFR</option>
+              <option value="fda">FDA</option>
+              <option value="hhs">HHS</option>
+              <option value="asq">ASQ</option>
+              <option value="astm">ASTM</option>
+              <option value="ista">ISTA</option>
+              <option value="ansi">ANSI</option>
+              <option value="other">Other/Unknown</option>
+            </select>
+
+            <select id="filter-status" class="filter-select">
+              <option value="">All Statuses</option>
+              <option value="current">Current</option>
+              <option value="outdated">Outdated</option>
+              <option value="unverified">Unverified</option>
+            </select>
+
+            <button onclick="resetFilters()" class="filter-reset-btn">Reset</button>
+          </div>
+
           <table class="results-table" id="resultsTable">
             <thead>
               <tr>

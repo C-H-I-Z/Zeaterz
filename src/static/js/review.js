@@ -1,6 +1,7 @@
 // ── STATE ─────────────────────────────────────────────────────────────────────
 
 var currentData  = [];
+var filteredData = [];
 var editingIndex = null;
 var currentFilename = '';
 
@@ -27,16 +28,24 @@ var currentFilename = '';
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
 
-function renderTable() {
-    var manualCount = currentData.filter(function(r) { return r.needs_manual_review; }).length;
+function renderTable(rows) {
+    rows = rows || currentData;
+    var manualCount = currentData.filter(function(r) { 
+        return r.needs_manual_review; 
+    }).length;
     var banner = document.getElementById('manualReviewBanner');
+
     if (manualCount > 0) banner.classList.add('visible');
     else banner.classList.remove('visible');
 
     var usCount   = currentData.filter(function(r) { return r.region === 'US'; }).length;
     var intlCount = currentData.filter(function(r) { return r.region === 'International'; }).length;
     var cats      = {};
-    currentData.forEach(function(r) { cats[r.category || 'Uncategorized'] = true; });
+
+    currentData.forEach(function(r) { 
+        cats[r.category || 'Uncategorized'] = true; 
+    });
+
     var catCount  = Object.keys(cats).length;
 
     var warnClass = manualCount > 0 ? ' warning-card' : '';
@@ -51,9 +60,9 @@ function renderTable() {
     var tbody = document.getElementById('resultsBody');
     tbody.innerHTML = '';
 
-    for (var i = 0; i < currentData.length; i++) {
+    for (var i = 0; i < rows.length; i++) {
         (function(idx) {
-        var item      = currentData[idx];
+        var item      = rows[idx];
         var isManual  = item.needs_manual_review;
         var dateClass = isManual ? 'date-chip manual' : 'date-chip';
         var dateDisp  = (item.date || '') + (isManual ? ' *' : '');
@@ -191,6 +200,41 @@ function escHtml(s) {
         .replace(/>/g,  '&gt;')
         .replace(/"/g,  '&quot;');
 }
+
+// ── FILTERS ───────────────────────────────────────────────────────────────────
+
+function applyFilters() {
+    var searchTerm    = document.getElementById('filter-search').value.toLowerCase().trim();
+    var regionVal     = document.getElementById('filter-region').value;
+    var standardVal   = document.getElementById('filter-standard').value.toLowerCase().trim();
+
+    filteredData = currentData.filter(function(row) {
+        var matchesSearch = !searchTerm ||
+            (row.region  || '').toLowerCase().includes(searchTerm) ||
+            (row.standard_id  || '').toLowerCase().includes(searchTerm) ||
+            (row.status     || '').toLowerCase().includes(searchTerm);
+
+        var matchesRegion = !regionVal || row.region === regionVal;
+
+        var matchesStandard = !standardVal || (row.standard_id || '').toLowerCase().includes(standardVal.toLowerCase());
+
+        return matchesSearch && matchesRegion && matchesStandard;
+    });
+
+    renderTable(filteredData);
+}
+
+function resetFilters() {
+    document.getElementById('filter-search').value  = '';
+    document.getElementById('filter-region').value  = '';
+    document.getElementById('filter-standard').value  = '';
+    filteredData = [];
+    renderTable(currentData);
+}
+
+document.getElementById('filter-search').addEventListener('input',  applyFilters);
+document.getElementById('filter-region').addEventListener('change', applyFilters);
+document.getElementById('filter-standard').addEventListener('change', applyFilters);
 
 document.getElementById('modalOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeModal();

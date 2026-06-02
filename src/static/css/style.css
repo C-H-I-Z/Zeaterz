@@ -481,6 +481,68 @@ footer {
   padding: 2px 7px; border-radius: 3px; white-space: nowrap;
 }
 
+/* ─── Filter Bar ────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  text-align: left; 
+  padding: 10px 14px; 
+  font-size: 10px; 
+  text-transform: uppercase;
+  letter-spacing: 0.1em; 
+  color: var(--muted); 
+  background: #f0f6fb;
+  border-bottom: 1px solid var(--border); 
+  font-weight: 700; 
+  white-space: nowrap;
+}
+
+.filter-input,
+.filter-select {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background-color: var(--color-white);
+  transition: border-color var(--transition-fast);
+}
+
+.filter-input { width: 240px; }
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.filter-reset-btn {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-reset-btn:hover {
+  background: var(--color-gray-100);
+  color: var(--color-text);
+}
+
+/* ─── Empty State ───────────────────────────────────── */
+.no-results {
+  text-align: center;
+  padding: var(--space-8);
+  color: var(--color-text-muted);
+}
+
+.hidden { display: none; }
+
 /* ── STATUS BADGES ──────────────────────────────────────────────────────────── */
 .status-badge {
   display: inline-flex; align-items: center; gap: 5px;

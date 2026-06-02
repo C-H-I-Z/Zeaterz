@@ -84,6 +84,36 @@
         <p class="edit-hint">Click any row to edit. Use "+ Add Row" to add missing standards.</p>
 
         <div class="results-table-wrap">
+          <!-- Filter Controls -->
+          <div class="filter-bar">
+            <input 
+              type="text" 
+              id="filter-search" 
+              class="filter-input" 
+              placeholder="Search by standard body or review flag..."
+            />
+
+            <select id="filter-region" class="filter-select">
+              <option value="">All Regions</option>
+              <option value="US">US</option>
+              <option value="International">International</option>
+            </select>
+
+            <select id="filter-standard" class="filter-select">
+              <option value="">All Standards</option>
+              <option value="iso">ISO</option>
+              <option value="ecfr">eCFR</option>
+              <option value="fda">FDA</option>
+              <option value="hhs">HHS</option>
+              <option value="asq">ASQ</option>
+              <option value="astm">ASTM</option>
+              <option value="ista">ISTA</option>
+              <option value="ansi">ANSI</option>
+            </select>
+
+            <button onclick="resetFilters()" class="filter-reset-btn">Reset</button>
+          </div>
+
           <table class="results-table" id="resultsTable">
             <thead>
               <tr>

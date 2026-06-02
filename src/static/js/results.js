@@ -1,6 +1,7 @@
 // ── STATE ─────────────────────────────────────────────────────────────────────
 
 var currentData  = [];
+var filteredData = [];
 var totalTokens  = 0;
 var checkDone    = false;
 
@@ -114,6 +115,67 @@ function updateStats() {
         '<div class="stat-card warning-card"><div class="stat-number warning">' + unverified + '</div><div class="stat-label">Unverified</div></div>';
 }
 
+// ── FILTERS ───────────────────────────────────────────────────────────────────
+
+function renderTable(rows) {
+    var tbody = document.getElementById('resultsBody');
+    tbody.innerHTML = '';
+    rows.forEach(function(item, i) {
+        var realIdx = currentData.indexOf(item);
+        var row = buildRow(realIdx, item, false);
+        tbody.appendChild(row);
+    });
+}
+
+function applyFilters() {
+    var searchTerm    = document.getElementById('filter-search').value.toLowerCase().trim();
+    var regionVal     = document.getElementById('filter-region').value;
+    var standardVal   = document.getElementById('filter-standard').value;
+    var statusVal     = document.getElementById('filter-status').value;
+
+    filteredData = currentData.filter(function(row) {
+        var matchesSearch = !searchTerm ||
+            (row.region  || '').toLowerCase().includes(searchTerm) ||
+            (row.standard_id  || '').toLowerCase().includes(searchTerm) ||
+            (row.status     || '').toLowerCase().includes(searchTerm);
+
+        var matchesRegion = !regionVal || row.region === regionVal;
+
+        var matchesStandard = !standardVal || (row.standard_id || '').toLowerCase().includes(standardVal.toLowerCase());
+
+        var matchesStatus = !statusVal ||
+            (statusVal === 'CURRENT' && row.status === 'CURRENT') ||
+            (statusVal === 'OUTDATED' && row.status === 'OUTDATED') ||
+            (statusVal === 'UNVERIFIED' && row.status === 'UNVERIFIED');
+
+        return matchesSearch && matchesRegion && matchesStandard && matchesStatus;
+    });
+
+    renderTable(filteredData);
+    updateStats();
+}
+
+function resetFilters() {
+    document.getElementById('filter-search').value    = '';
+    document.getElementById('filter-region').value    = '';
+    document.getElementById('filter-standard').value  = '';
+    document.getElementById('filter-status').value    = '';
+    filteredData = [];
+    renderTable(currentData);
+    updateStats();
+}
+
+function enableFilters() {
+    // Reveal the filter bar (keep it hidden while check is running)
+    document.getElementById('filter-bar').style.display = 'flex';
+
+    // Wire up event listeners (only once check is complete)
+    document.getElementById('filter-search').addEventListener('input',  applyFilters);
+    document.getElementById('filter-region').addEventListener('change', applyFilters);
+    document.getElementById('filter-standard').addEventListener('change', applyFilters);
+    document.getElementById('filter-status').addEventListener('change', applyFilters);
+}
+
 // ── SSE COMPLIANCE CHECK ──────────────────────────────────────────────────────
 
 function startCheck() {
@@ -184,6 +246,8 @@ function onCheckComplete(data) {
 
     // Save final state to sessionStorage
     sessionStorage.setItem('sota_requirements', JSON.stringify(currentData));
+
+    enableFilters();
 }
 
 // ── EXPORT ────────────────────────────────────────────────────────────────────
