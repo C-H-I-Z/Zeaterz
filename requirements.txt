@@ -1,5 +1,6 @@
 flask
 google-genai
+gevent
 httpx
 pdfplumber
 python-docx
