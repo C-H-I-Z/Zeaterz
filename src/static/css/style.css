@@ -487,7 +487,7 @@ footer {
   gap: var(--space-3);
   margin-bottom: var(--space-6);
   flex-wrap: wrap;
-  text-align: left; 
+  justify-content: flex-end;
   padding: 10px 14px; 
   font-size: 10px; 
   text-transform: uppercase;
@@ -508,6 +508,9 @@ footer {
   color: var(--color-text);
   background-color: var(--color-white);
   transition: border-color var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
 }
 
 .filter-input { width: 240px; }
@@ -527,6 +530,10 @@ footer {
   color: var(--color-text-muted);
   cursor: pointer;
   transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-left: auto;
 }
 
 .filter-reset-btn:hover {
