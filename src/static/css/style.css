@@ -444,9 +444,16 @@ footer {
 .results-table { width: 100%; border-collapse: collapse; min-width: 1300px; }
 
 .results-table th {
-  text-align: left; padding: 10px 14px; font-size: 10px; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--muted); background: #f0f6fb;
-  border-bottom: 1px solid var(--border); font-weight: 700; white-space: nowrap;
+  text-align: left; 
+  padding: 10px 14px; 
+  font-size: 10px; 
+  text-transform: uppercase;
+  letter-spacing: 0.1em; 
+  color: var(--muted); 
+  background: #f0f6fb;
+  border-bottom: 1px solid var(--border); 
+  font-weight: 700; 
+  white-space: nowrap;
 }
 
 .results-table td {
@@ -492,33 +499,36 @@ footer {
   font-size: 10px; 
   text-transform: uppercase;
   letter-spacing: 0.1em; 
-  color: var(--muted); 
-  background: #f0f6fb;
+  color: var(--white); 
+  background: var(--blue);
   border-bottom: 1px solid var(--border); 
+  border-color: var(--blue);
   font-weight: 700; 
   white-space: nowrap;
 }
 
-.filter-input,
 .filter-select {
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
-  color: var(--color-text);
-  background-color: var(--color-white);
   transition: border-color var(--transition-fast);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 700;
+  color: var(--white); 
+  background: var(--blue);
+  border-color: var(--blue);
 }
 
-.filter-input { width: 240px; }
-
-.filter-input:focus,
 .filter-select:focus {
   outline: none;
   border-color: var(--color-primary);
+}
+
+.filter-select option {
+  background-color: #ffffff;
+  color: var(--blue);
 }
 
 .filter-reset-btn {

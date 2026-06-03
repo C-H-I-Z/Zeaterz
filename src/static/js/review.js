@@ -204,35 +204,27 @@ function escHtml(s) {
 // ── FILTERS ───────────────────────────────────────────────────────────────────
 
 function applyFilters() {
-    var searchTerm    = document.getElementById('filter-search').value.toLowerCase().trim();
     var regionVal     = document.getElementById('filter-region').value;
     var standardVal   = document.getElementById('filter-standard').value.toLowerCase().trim();
 
     filteredData = currentData.filter(function(row) {
-        var matchesSearch = !searchTerm ||
-            (row.region  || '').toLowerCase().includes(searchTerm) ||
-            (row.standard_id  || '').toLowerCase().includes(searchTerm) ||
-            (row.status     || '').toLowerCase().includes(searchTerm);
-
         var matchesRegion = !regionVal || row.region === regionVal;
 
         var matchesStandard = !standardVal || (row.standard_id || '').toLowerCase().includes(standardVal.toLowerCase());
 
-        return matchesSearch && matchesRegion && matchesStandard;
+        return matchesRegion && matchesStandard;
     });
 
     renderTable(filteredData);
 }
 
 function resetFilters() {
-    document.getElementById('filter-search').value  = '';
     document.getElementById('filter-region').value  = '';
     document.getElementById('filter-standard').value  = '';
     filteredData = [];
     renderTable(currentData);
 }
 
-document.getElementById('filter-search').addEventListener('input',  applyFilters);
 document.getElementById('filter-region').addEventListener('change', applyFilters);
 document.getElementById('filter-standard').addEventListener('change', applyFilters);
 

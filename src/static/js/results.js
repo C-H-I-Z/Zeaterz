@@ -128,24 +128,18 @@ function renderTable(rows) {
 }
 
 function applyFilters() {
-    var searchTerm    = document.getElementById('filter-search').value.toLowerCase().trim();
     var regionVal     = document.getElementById('filter-region').value;
     var standardVal   = document.getElementById('filter-standard').value;
     var statusVal     = document.getElementById('filter-status').value;
 
     filteredData = currentData.filter(function(row) {
-        var matchesSearch = !searchTerm ||
-            (row.region  || '').toLowerCase().includes(searchTerm) ||
-            (row.standard_id  || '').toLowerCase().includes(searchTerm) ||
-            (row.status     || '').toLowerCase().includes(searchTerm);
-
         var matchesRegion = !regionVal || row.region === regionVal;
 
         var matchesStandard = !standardVal || (row.standard_id || '').toLowerCase().includes(standardVal.toLowerCase());
 
         var matchesStatus = !statusVal || (row.status || '').toUpperCase().trim() === statusVal.toUpperCase().trim();
 
-        return matchesSearch && matchesRegion && matchesStandard && matchesStatus;
+        return matchesRegion && matchesStandard && matchesStatus;
     });
 
     renderTable(filteredData);
@@ -153,7 +147,6 @@ function applyFilters() {
 }
 
 function resetFilters() {
-    document.getElementById('filter-search').value    = '';
     document.getElementById('filter-region').value    = '';
     document.getElementById('filter-standard').value  = '';
     document.getElementById('filter-status').value    = '';
@@ -167,7 +160,6 @@ function enableFilters() {
     document.getElementById('filter-bar').style.display = 'flex';
 
     // Wire up event listeners (only once check is complete)
-    document.getElementById('filter-search').addEventListener('input',  applyFilters);
     document.getElementById('filter-region').addEventListener('change', applyFilters);
     document.getElementById('filter-standard').addEventListener('change', applyFilters);
     document.getElementById('filter-status').addEventListener('change', applyFilters);
