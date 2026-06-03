@@ -143,10 +143,7 @@ function applyFilters() {
 
         var matchesStandard = !standardVal || (row.standard_id || '').toLowerCase().includes(standardVal.toLowerCase());
 
-        var matchesStatus = !statusVal ||
-            (statusVal === 'CURRENT' && row.status === 'CURRENT') ||
-            (statusVal === 'OUTDATED' && row.status === 'OUTDATED') ||
-            (statusVal === 'UNVERIFIED' && row.status === 'UNVERIFIED');
+        var matchesStatus = !statusVal || (row.status || '').toUpperCase().trim() === statusVal.toUpperCase().trim();
 
         return matchesSearch && matchesRegion && matchesStandard && matchesStatus;
     });
