@@ -247,8 +247,8 @@ function toggleSort() {
 }
 
 function enableFilters() {
-    document.getElementById('filter-bar').classList.remove('hidden');
-    document.getElementById('sortBtn').disabled = false;
+    // Reveal the filter bar (keep it hidden while check is running)
+    document.getElementById('filter-bar').style.display = 'flex';
 
     document.getElementById('filter-region').addEventListener('change', applyFilters);
     document.getElementById('filter-standard').addEventListener('change', applyFilters);
