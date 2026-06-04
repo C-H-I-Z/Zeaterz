@@ -53,10 +53,24 @@
         <div class="page-heading">Upload Document</div>
         <div class="page-sub">Upload your External Documents List to extract all regulatory requirements.</div>
 
+        <!-- AI Status Bar -->
+        <div class="ai-status-bar" id="aiStatusBar">
+          <div class="ai-status-left">
+            <span class="ai-status-dot" id="aiStatusDot"></span>
+            <span class="ai-status-label" id="aiStatusLabel">Checking AI status&hellip;</span>
+          </div>
+          <div class="ai-status-right" id="aiStatusMeta"></div>
+        </div>
+
         <div class="upload-card">
           <div class="card-title">
             <div class="card-title-icon">&#128203;</div>
             Document Upload
+          </div>
+
+          <div class="upload-guidance">
+            <p>Upload an <strong>External Documents List</strong> or equivalent regulatory reference document containing a structured list of standards, regulations, or guidance documents (e.g. ISO standards, 21 CFR parts, FDA guidance docs).</p>
+            <p>Do <strong>not</strong> upload raw regulatory standards, contracts, design files, or unstructured documents &mdash; the AI will only extract meaningful results from lists of requirements.</p>
           </div>
 
           <div class="drop-zone" id="dropZone">
@@ -104,6 +118,69 @@
       <footer>
         &copy; Rallis-Daw Consulting LLC &nbsp;&middot;&nbsp; SOTA &nbsp;&middot;&nbsp; For internal use only
       </footer>
+    </div>
+
+    <!-- Disclaimer Modal -->
+    <div class="disclaimer-overlay" id="disclaimerOverlay">
+      <div class="disclaimer-modal">
+
+        <div class="disclaimer-modal-header">
+          <span class="disclaimer-modal-icon">&#9888;</span>
+          SOTA &mdash; System Use Warning
+        </div>
+
+        <div class="disclaimer-modal-body">
+          <p class="disclaimer-intro">
+            Use of the <strong>SOTA Regulatory Requirements Management System</strong> is
+            intended for qualified professionals only. Please read the following warning carefully before proceeding.
+          </p>
+
+          <div class="disclaimer-section">
+            <div class="disclaimer-section-title">Prototype System</div>
+            <p>This tool is currently in the <strong>prototyping stage</strong> and is provided
+            for internal evaluation purposes only. It was developed by a student team at the
+            University of California, Irvine, in partnership with Rallis-Daw Consulting LLC
+            and is not meant for commercial use.</p>
+          </div>
+
+          <div class="disclaimer-section">
+            <div class="disclaimer-section-title">AI-Powered Analysis</div>
+            <p>The SOTA system uses an AI Model and automated web search to parse
+            regulatory documents and verify the dates of listed requirements. AI-generated
+            outputs may be incomplete, inaccurate, or outdated and are not guaranteed to return
+            the most current dates.</p>
+          </div>
+
+          <div class="disclaimer-section">
+            <div class="disclaimer-section-title">Not Professional Regulatory Advice</div>
+            <p>The outputs of this system are not regulatory, legal, or compliance
+            advice. All results must be <strong>independently reviewed and validated by a
+            qualified regulatory professional</strong> before use in any compliance, submission,
+            or regulatory decision making situation.</p>
+          </div>
+
+          <div class="disclaimer-section">
+            <div class="disclaimer-section-title">Liability Warning</div>
+            <p>The development team, the University of California, Irvine <strong>assume no liability</strong> for decisions or errors
+            arising from the use of this system. Use of SOTA is entirely at your
+            own discretion and risk.</p>
+          </div>
+        </div>
+
+        <div class="disclaimer-modal-footer">
+          <label class="disclaimer-check-label">
+            <input type="checkbox" id="disclaimerCheck" onchange="onDisclaimerCheck()">
+            <span>I have read and understood this disclaimer. I acknowledge that all outputs
+            must be verified by a qualified professional and that the developers are not liable
+            for any decisions made based on this system&rsquo;s results.</span>
+          </label>
+          <button type="button" class="btn-disclaimer-proceed" id="disclaimerProceedBtn"
+                  onclick="acceptDisclaimer()" disabled>
+            Proceed to Upload
+          </button>
+        </div>
+
+      </div>
     </div>
 
     <script src="static/js/upload.js"></script>
