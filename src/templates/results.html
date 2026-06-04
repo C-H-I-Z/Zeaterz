@@ -79,6 +79,9 @@
         <div class="results-header">
           <div class="results-heading">Extraction &amp; Compliance Results</div>
           <div class="btn-group">
+            <button type="button" class="action-btn btn-sort" id="sortBtn" onclick="toggleSort()" disabled>
+              &#8597; Sort A &rarr; Z
+            </button>
             <button type="button" class="action-btn btn-export" id="exportBtn" onclick="downloadExcel()" disabled>
               &#8595; Export to Excel
             </button>
@@ -94,6 +97,22 @@
           <p>
             <strong>NOTE</strong> &mdash; Navigation outside this page will result in loss of changes. Changes are <strong>NOT</strong> saved per session.
           </p>
+        </div>
+
+        <!-- Paywall notice banner -->
+        <div class="paywall-banner" id="paywallBanner">
+          <strong>&#128274; Paywall Notice</strong> &mdash; Some standards (ISO, ASTM, ANSI, ASQ)
+          are published behind paywalls. Version information was retrieved from public-facing pages
+          only &mdash; full document access requires a subscription. AI summaries for these
+          standards are generated from publicly available information and training knowledge.
+        </div>
+
+        <!-- Key / Legend -->
+        <div class="legend-bar">
+          <strong>Key:</strong>
+          &nbsp;<span class="legend-item"><strong>**</strong> = Check applicable website for current revision</span>
+          &nbsp;&middot;&nbsp;<span class="legend-item"><strong>RCS</strong> = Recognized Consensus Standard</span>
+          &nbsp;&middot;&nbsp;<span class="legend-item"><strong>HS</strong> = Harmonized Standard</span>
         </div>
 
         <div class="results-table-wrap">
@@ -158,6 +177,17 @@
       <footer>
         &copy; Rallis-Daw Consulting LLC &nbsp;&middot;&nbsp; SOTA &nbsp;&middot;&nbsp; For internal use only
       </footer>
+    </div>
+
+    <!-- Summary Modal -->
+    <div class="modal-overlay" id="summaryModalOverlay">
+      <div class="modal summary-modal">
+        <div class="modal-title" id="summaryModalTitle">Standard Summary</div>
+        <div class="summary-modal-body" id="summaryModalBody"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn-modal-cancel" onclick="closeSummaryModal()">Close</button>
+        </div>
+      </div>
     </div>
 
     <script src="static/js/results.js"></script>
