@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOTA &mdash; Compliance Check</title>
+  <link rel="icon" href="{{ url_for('static', filename='images/rallis-daw logo.png') }}" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <div class="page">
+
+      <svg class="wave-bg" viewBox="0 0 1440 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="wv1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#4a4892" stop-opacity="0.72"/>
+            <stop offset="100%" stop-color="#5e55b8" stop-opacity="0.65"/>
+          </linearGradient>
+          <linearGradient id="wv2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#3878d4" stop-opacity="0.60"/>
+            <stop offset="100%" stop-color="#4b9ee8" stop-opacity="0.52"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,240 C280,172 540,130 780,172 C1020,214 1210,136 1440,120 L1440,560 L0,560 Z"
+              fill="url(#wv1)" opacity="0.72"/>
+        <path d="M0,332 C200,284 400,242 620,266 C800,286 990,218 1200,242 C1350,260 1410,224 1440,210 L1440,560 L0,560 Z"
+              fill="url(#wv2)" opacity="0.60"/>
+        <path d="M0,408 C160,372 310,332 468,352 C596,368 698,316 820,336 C916,352 974,332 1080,392 C1176,440 1316,380 1440,350 L1440,560 L0,560 Z"
+              fill="#4dc8e8" opacity="0.28"/>
+      </svg>
+
+      <header>
+        <div class="logo-wrap">
+          <img class="logo-img"
+            src="https://static.wixstatic.com/media/9f2dc8_980147f3f25a4e50a2220ab0bd98dba8~mv2.png/v1/fill/w_129,h_128,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sig%20logo.png"
+            alt="Rallis-Daw Consulting">
+        </div>
+        <div class="header-right">
+          <nav class="nav-links">
+            <a href="/about">About</a>
+            <a href="/help">Help</a>
+          </nav>
+
+          <div class="token-counter" id="tokenCounter">
+            <span class="token-dot"></span>
+            <span id="tokenText">0 tokens</span>
+          </div>
+
+          <div class="tool-label">SOTA &mdash; RegCheck</div>
+        </div>
+      </header>
+
+      <div class="content">
+
+        <div class="page-title">Step 3 of 3 &mdash; Compliance Check</div>
+        <div class="page-heading">Compliance Results</div>
+        <div class="page-sub">Live web search is running for each requirement. Results appear as they complete.</div>
+
+        <!-- Progress bar (shown during check) -->
+        <div class="progress-section" id="progressSection">
+          <div class="progress-header">
+            <div class="progress-label" id="progressLabel">Starting compliance check&hellip;</div>
+            <div class="progress-header-right">
+              <div class="progress-elapsed" id="progressElapsed">0:00</div>
+              <div class="progress-count" id="progressCount">0 / 0</div>
+            </div>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+          </div>
+          <div class="progress-sub" id="progressSub">Connecting to Gemini with Google Search grounding&hellip;</div>
+          <div class="progress-tally hidden" id="progressTally">
+            <span class="tally-item tally-current"><span id="tallyCurrent">0</span> Current</span>
+            <span class="tally-item tally-outdated"><span id="tallyOutdated">0</span> Outdated</span>
+            <span class="tally-item tally-unverified"><span id="tallyUnverified">0</span> Unverified</span>
+          </div>
+        </div>
+
+        <!-- Error box -->
+        <div class="error-box" id="errorBox"></div>
+
+        <!-- Stats row -->
+        <div class="stats-row" id="statsRow"></div>
+
+        <!-- Results header -->
+        <div class="results-header">
+          <div class="results-heading">Extraction &amp; Compliance Results</div>
+          <div class="btn-group">
+            <button type="button" class="action-btn btn-sort" id="sortBtn" onclick="toggleSort()" disabled>
+              &#8597; Sort A &rarr; Z
+            </button>
+            <button type="button" class="action-btn btn-export" id="exportBtn" onclick="downloadExcel()" disabled>
+              &#8595; Export to Excel
+            </button>
+          </div>
+        </div>
+
+        <!-- Manual review banner -->
+        <div class="manual-review-banner" id="manualReviewBanner">
+          <strong>Manual Review Required</strong> &mdash; Requirements marked <strong>**</strong>
+          had no specific date on file. The web search retrieved the latest published version where
+          possible, but these must be independently verified. Visit the source URL shown in the
+          results or the applicable regulatory website.
+          <p class="banner-note">
+            <strong>NOTE</strong> &mdash; Navigation outside this page will result in loss of changes. Changes are <strong>NOT</strong> saved per session.
+          </p>
+        </div>
+
+        <!-- Paywall notice banner -->
+        <div class="paywall-banner" id="paywallBanner">
+          <strong>&#128274; Paywall Notice</strong> &mdash; Some standards (ISO, ASTM, ANSI, ASQ)
+          are published behind paywalls. Version information was retrieved from public-facing pages
+          only &mdash; full document access requires a subscription. AI summaries for these
+          standards are generated from publicly available information and training knowledge.
+        </div>
+
+        <!-- Key / Legend -->
+        <div class="legend-bar">
+          <strong>Key:</strong>
+          &nbsp;<span class="legend-item"><strong>**</strong> = Check applicable website for current revision</span>
+          &nbsp;&middot;&nbsp;<span class="legend-item"><strong>RCS</strong> = Recognized Consensus Standard</span>
+          &nbsp;&middot;&nbsp;<span class="legend-item"><strong>HS</strong> = Harmonized Standard</span>
+        </div>
+
+        <div class="results-table-wrap">
+          <!-- Filter Controls -->
+          <div id="filter-bar" class="filter-bar hidden">
+            <select id="filter-region" class="filter-select" title="Filter by region">
+              <option value="">All Regions</option>
+              <option value="US">US</option>
+              <option value="International">International</option>
+            </select>
+
+            <select id="filter-standard" class="filter-select" title="Filter by standard type">
+              <option value="">All Standards</option>
+              <option value="iso">ISO</option>
+              <option value="ecfr">eCFR</option>
+              <option value="fda">FDA</option>
+              <option value="hhs">HHS</option>
+              <option value="asq">ASQ</option>
+              <option value="astm">ASTM</option>
+              <option value="ista">ISTA</option>
+              <option value="ansi">ANSI</option>
+              <option value="other">Other/Unknown</option>
+            </select>
+
+            <select id="filter-status" class="filter-select" title="Filter by status">
+              <option value="">All Statuses</option>
+              <option value="current">Current</option>
+              <option value="outdated">Outdated</option>
+              <option value="unverified">Unverified</option>
+            </select>
+
+            <button type="button" onclick="resetFilters()" class="filter-reset-btn">Reset Filters</button>
+          </div>
+
+          <table class="results-table" id="resultsTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Standard ID</th>
+                <th>Date on File</th>
+                <th>Current Version</th>
+                <th>Status</th>
+                <th>Source</th>
+                <th>Category</th>
+                <th>Region</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+          </table>
+        </div>
+
+        <!-- AI Disclaimer -->
+        <div class="ai-disclaimer">
+          &#9888; <strong>AI Disclaimer</strong> &mdash; All results should be independently
+          verified by a qualified regulatory professional before use in any compliance or
+          regulatory submission. Rallis-Daw Consulting assumes no liability for the accuracy
+          of AI-generated output.
+        </div>
+
+      </div>
+
+      <footer>
+        &copy; Rallis-Daw Consulting LLC &nbsp;&middot;&nbsp; SOTA &nbsp;&middot;&nbsp; For internal use only
+      </footer>
+    </div>
+
+    <!-- Summary Modal -->
+    <div class="modal-overlay" id="summaryModalOverlay">
+      <div class="modal summary-modal">
+        <div class="modal-title" id="summaryModalTitle">Standard Summary</div>
+        <div class="summary-modal-body" id="summaryModalBody"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn-modal-cancel" onclick="closeSummaryModal()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/results.js') }}"></script>
+  </body>
+</html>

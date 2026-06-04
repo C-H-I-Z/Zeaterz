@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOTA &mdash; About</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/rallis-daw logo.png') }}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+
+  <body class="about-body">
+    <div class="page">
+      <svg class="wave-bg" viewBox="0 0 1440 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="wv1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#4a4892" stop-opacity="0.72"/>
+            <stop offset="100%" stop-color="#5e55b8" stop-opacity="0.65"/>
+          </linearGradient>
+          <linearGradient id="wv2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#3878d4" stop-opacity="0.60"/>
+            <stop offset="100%" stop-color="#4b9ee8" stop-opacity="0.52"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,240 C280,172 540,130 780,172 C1020,214 1210,136 1440,120 L1440,560 L0,560 Z"
+              fill="url(#wv1)" opacity="0.72"/>
+        <path d="M0,332 C200,284 400,242 620,266 C800,286 990,218 1200,242 C1350,260 1410,224 1440,210 L1440,560 L0,560 Z"
+              fill="url(#wv2)" opacity="0.60"/>
+        <path d="M0,408 C160,372 310,332 468,352 C596,368 698,316 820,336 C916,352 974,332 1080,392 C1176,440 1316,380 1440,350 L1440,560 L0,560 Z"
+              fill="#4dc8e8" opacity="0.28"/>
+      </svg>
+
+      <header>
+
+        <div class="logo-wrap">
+          <img class="logo-img"
+            src="https://static.wixstatic.com/media/9f2dc8_980147f3f25a4e50a2220ab0bd98dba8~mv2.png/v1/fill/w_129,h_128,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sig%20logo.png"
+            alt="Rallis-Daw Consulting">
+        </div>
+
+        <div class="header-right">
+          <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/upload">Upload</a>
+            <a href="/help">Help</a>
+          </nav>
+
+          <div class="tool-label">SOTA &mdash; RegCheck</div>
+        </div>
+
+      </header>
+
+      <div class="content">
+
+        <section id="aboutScreen">
+
+          <div class="help-about-layout">
+
+            <div class="help-about-left">
+              <div class="page-title">
+                About SOTA
+              </div>
+              <div class="page-heading" style="margin-bottom: 48px;">
+                Regulatory Requirements Management System
+              </div>
+              <div class="info-card">
+                <h3>Purpose</h3>
+                <p>
+                  Our platform assists reviewers by automatically identifying relevant
+                  regulatory standards from uploaded device-requirement documents,
+                  improving consistency and reducing manual effort.
+                </p>
+                <p>Most medical device developers spend a significant portion of their
+                  time manually verifying and organizing regulatory requirements from
+                  lengthy documents across various regulatory sources. Their requirements
+                  documents must have the most up-to-date compliances to ensure a smooth
+                  review process from a professional, otherwise they risk facing delays
+                  in their product development and costly fees to review a resubmitted
+                  document.
+                </p>
+                <p>By leveraging AI, our tool parses through complex requirements documents
+                  and extracts all relevant items that will be compared with the most recent
+                  metadata retrieved by our webscraper.
+                </p>
+                <h3>Intended Use</h3>
+                <p>
+                  This tool is intended to support internal review workflows.
+                  It is not a substitute for professional regulatory or compliance judgment.
+                </p>
+                <h3>AI Disclaimer</h3>
+                <p>
+                  All AI-generated outputs must be independently reviewed and validated
+                  by a qualified professional before being used in any regulatory,
+                  compliance, or submission context.
+                </p>
+              </div>
+            </div>
+
+            <section>
+              <div class="help-about-medtech">
+                <img src="/static/images/medtech.avif" alt="Medtech Professionals Image">
+              </div>
+
+              <div class="info-card" style="margin-top: 36px;">
+                <div class="page-title" style="margin-bottom: 24px;">UCI Development Team</div>
+                <h3>Sibi Sankar</h3> <p>- Product Manager</p>
+                <h3>Ella Nguyen</h3> <p>- Project Manager</p>
+                <h3>Grace Fermin</h3> <p>- Lead Developer</p>
+                <h3>Shreya Shyam</h3> <p>- External Communications</p>
+                <h3>Chisom Eze</h3> <p>- UI/UX Developer</p>
+              </div>
+            </section>
+
+          </div>
+        </section>
+
+      </div>
+
+      <footer>
+        &copy; Rallis-Daw Consulting LLC &middot; SOTA Tool &middot; For internal use only
+      </footer>
+
+    </div>
+  </body>
+</html>

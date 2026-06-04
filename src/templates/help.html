@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOTA &mdash; Help</title>
+
+  <link rel="icon" href="{{ url_for('static', filename='images/rallis-daw logo.png') }}" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+  <body>
+
+  <div class="page">
+
+    <svg class="wave-bg" viewBox="0 0 1440 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="wv1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#4a4892" stop-opacity="0.72"/>
+          <stop offset="100%" stop-color="#5e55b8" stop-opacity="0.65"/>
+        </linearGradient>
+        <linearGradient id="wv2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#3878d4" stop-opacity="0.60"/>
+          <stop offset="100%" stop-color="#4b9ee8" stop-opacity="0.52"/>
+        </linearGradient>
+      </defs>
+      <path d="M0,240 C280,172 540,130 780,172 C1020,214 1210,136 1440,120 L1440,560 L0,560 Z"
+            fill="url(#wv1)" opacity="0.72"/>
+      <path d="M0,332 C200,284 400,242 620,266 C800,286 990,218 1200,242 C1350,260 1410,224 1440,210 L1440,560 L0,560 Z"
+            fill="url(#wv2)" opacity="0.60"/>
+      <path d="M0,408 C160,372 310,332 468,352 C596,368 698,316 820,336 C916,352 974,332 1080,392 C1176,440 1316,380 1440,350 L1440,560 L0,560 Z"
+            fill="#4dc8e8" opacity="0.28"/>
+    </svg>
+
+    <header>
+
+      <div class="logo-wrap">
+        <img class="logo-img"
+          src="https://static.wixstatic.com/media/9f2dc8_980147f3f25a4e50a2220ab0bd98dba8~mv2.png/v1/fill/w_129,h_128,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sig%20logo.png"
+          alt="Rallis-Daw Consulting">
+      </div>
+
+      <div class="header-right">
+        <nav class="nav-links">
+          <a href="/">Home</a>
+          <a href="/upload">Upload</a>
+          <a href="/about">About</a>
+        </nav>
+
+        <div class="tool-label">SOTA &mdash; RegCheck</div>
+      </div>
+
+    </header>
+
+    <div class="content">
+
+      <section id="helpScreen">
+
+        <div class="help-about-layout">
+
+          <div class="help-about-left">
+
+            <div class="page-title">
+              Help Center
+            </div>
+
+            <div class="page-heading">
+              User Support
+            </div>
+
+            <div class="page-sub">
+              Use these FAQ(s) to understand how SOTA supports requirements
+              management for medical device professionals.
+            </div>
+
+            <div class="info-card">
+
+              <h3>How do I upload a requirements document?</h3>
+
+              <ul>
+                <li>Go to the Upload page.</li>
+                <li>Drag and drop <strong>OR</strong> upload a PDF, DOCX, or XLSX file into the upload box.</li>
+                <li>Click "Extract Requirements" to process the file.</li>
+              </ul>
+
+              <h3>What are the accepted file types?</h3>
+
+              <p>
+                SOTA currently accepts PDF, DOCX, and XLSX files.
+              </p>
+
+              <h3>What do the status flags on the Results page mean?</h3>
+
+              <ul>
+                <li><strong>Current</strong>: The requirement is up-to-date.</li>
+                <li><strong>Outdated</strong>: The requirement compliance is no longer current.</li>
+                <li><strong>Needs Manual Review</strong>: The requirement requires manual verification by the user from an official regulatory source.</li>
+              </ul>
+
+              <h3>What does "Error: Gemini returned an invalid response. Try again." mean?</h3>
+              <p>
+                This error indicates that the Gemini service returned an unexpected response. Usually, clicking "Extract Requirements" 2-3 times resolves the issue. If that does not work, contact us.
+              </p>
+            </div>
+
+          </div>
+
+          <section>
+            <div class="help-about-medtech">
+              <img src="/static/images/medtech.avif" alt="Medtech Professionals Image">
+            </div>
+
+            <div class="info-card" style="margin-top: 36px;">
+              <div class="page-title" style="margin-bottom: 24px;">Contact Information</div>
+              <h3>Phone</h3>
+              <p>+1 (949) 624-4252</p>
+              <h3>Email</h3>
+              <p>info@rallis-dawconsulting.com</p>
+              <h3>Address</h3>
+              <p>91 Avenida Del Mar, Suite 300B</p>
+              <p>San Clemente, CA</p>
+              <p>92672 USA</p>
+            </div>
+          </section>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <footer>
+      &copy; Rallis-Daw Consulting LLC &middot; SOTA Tool &middot; For internal use only
+    </footer>
+
+  </div>
+
+  </body>
+</html>
