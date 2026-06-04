@@ -79,9 +79,6 @@
         <div class="results-header">
           <div class="results-heading">Extraction &amp; Compliance Results</div>
           <div class="btn-group">
-            <button type="button" class="action-btn btn-sort" id="sortBtn" onclick="toggleSort()" disabled>
-              &#8597; Sort A &rarr; Z
-            </button>
             <button type="button" class="action-btn btn-export" id="exportBtn" onclick="downloadExcel()" disabled>
               &#8595; Export to Excel
             </button>
@@ -118,6 +115,7 @@
         <div class="results-table-wrap">
           <!-- Filter Controls -->
           <div id="filter-bar" class="filter-bar" style="display:none">
+            <button id="sortBtn" onclick="toggleSort()" class="filter-btn">&#8597; Sort A &rarr; Z</button>
             <select id="filter-region" class="filter-select">
               <option value="">All Regions</option>
               <option value="US">US</option>
@@ -143,7 +141,7 @@
               <option value="unverified">Unverified</option>
             </select>
 
-            <button onclick="resetFilters()" class="filter-reset-btn">Reset Filters</button>
+            <button onclick="resetFilters()" class="filter-btn filter-reset-right">Reset Filters</button>
           </div>
 
           <table class="results-table" id="resultsTable">

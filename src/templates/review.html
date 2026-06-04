@@ -76,7 +76,6 @@
           <div class="btn-group">
             
             <button type="button" class="action-btn btn-add-row" onclick="addRow()">+ Add Row</button>
-            <button type="button" class="action-btn btn-sort" id="sortBtn" onclick="toggleSort()">&#8597; Sort A &rarr; Z</button>
             <button type="button" class="action-btn btn-approve" onclick="approve()" id="approveBtn">
               &#10003; Approve &amp; Run Check &#8594;
             </button>
@@ -88,6 +87,7 @@
         <div class="results-table-wrap">
           <!-- Filter Controls -->
           <div class="filter-bar">
+            <button id="sortBtn" onclick="toggleSort()" class="filter-btn">&#8597; Sort A &rarr; Z</button>
             <select id="filter-region" class="filter-select">
               <option value="">All Regions</option>
               <option value="US">US</option>
@@ -106,7 +106,7 @@
               <option value="ansi">ANSI</option>
             </select>
 
-            <button onclick="resetFilters()" class="filter-reset-btn">Reset Filters</button>
+            <button onclick="resetFilters()" class="filter-btn filter-reset-right">Reset Filters</button>
           </div>
 
           <table class="results-table" id="resultsTable">

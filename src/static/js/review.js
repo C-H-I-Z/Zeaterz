@@ -289,6 +289,7 @@ function applyFilters() {
     filteredData = currentData.filter(function(row) {
         var matchesRegion   = !regionVal   || row.region === regionVal;
         var matchesStandard = !standardVal || (row.standard_id || '').toLowerCase().includes(standardVal);
+        
         return matchesRegion && matchesStandard;
     });
 

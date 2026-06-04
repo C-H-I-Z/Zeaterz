@@ -649,7 +649,7 @@ footer {
   color: var(--blue);
 }
 
-.filter-reset-btn {
+.filter-btn {
   padding: var(--space-2) var(--space-4);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -661,12 +661,21 @@ footer {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 700;
+}
+
+.filter-reset-right {
   margin-left: auto;
 }
 
-.filter-reset-btn:hover {
+.filter-btn:hover {
   background: var(--color-gray-100);
   color: var(--color-text);
+}
+
+.filter-select,
+#sortBtn {
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+  padding-right: var(--space-4);
 }
 
 /* ─── Empty State ───────────────────────────────────── */

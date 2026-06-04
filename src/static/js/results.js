@@ -127,6 +127,34 @@ function renderTable(rows) {
     });
 }
 
+/** Apply the active sort on top of the active filter set, then re-render. */
+function applyDisplay() {
+    var base = filteredData.length > 0 ? filteredData : currentData;
+
+    if (!sortOrder) {
+        renderTable(base);
+        
+    } else {
+        var sorted = base.slice().sort(function(a, b) {
+            var sa = (a.standard_id || '').toLowerCase();
+            var sb = (b.standard_id || '').toLowerCase();
+            return sortOrder === 'asc' ? sa.localeCompare(sb) : sb.localeCompare(sa);
+        });
+        renderTable(sorted);
+    }
+}
+
+function toggleSort() {
+    sortOrder = sortOrder === 'asc' ? null : 'asc';
+
+    var btn = document.getElementById('sortBtn');
+    btn.innerHTML = sortOrder === 'asc'
+        ? '&#8593; Sorted: A &rarr; Z'
+        : '&#8597; Sort A &rarr; Z';
+
+    applyDisplay();
+}
+
 function applyFilters() {
     var regionVal     = document.getElementById('filter-region').value;
     var standardVal   = document.getElementById('filter-standard').value;
@@ -134,16 +162,13 @@ function applyFilters() {
 
     filteredData = currentData.filter(function(row) {
         var matchesRegion = !regionVal || row.region === regionVal;
-
         var matchesStandard = !standardVal || (row.standard_id || '').toLowerCase().includes(standardVal.toLowerCase());
-
         var matchesStatus = !statusVal || (row.status || '').toUpperCase().trim() === statusVal.toUpperCase().trim();
 
         return matchesRegion && matchesStandard && matchesStatus;
     });
 
-    renderTable(filteredData);
-    updateStats();
+    applyDisplay();
 }
 
 function resetFilters() {
@@ -151,8 +176,7 @@ function resetFilters() {
     document.getElementById('filter-standard').value  = '';
     document.getElementById('filter-status').value    = '';
     filteredData = [];
-    renderTable(currentData);
-    updateStats();
+    applyDisplay();
 }
 
 function enableFilters() {
